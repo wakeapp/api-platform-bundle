@@ -1,0 +1,50 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Wakeapp\Bundle\ApiPlatformBundle\DependencyInjection\Compiler;
+
+use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Definition;
+use Symfony\Component\DependencyInjection\Exception\InvalidArgumentException;
+use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
+use Wakeapp\Bundle\ApiPlatformBundle\EventListener\ApiExceptionListener;
+use Wakeapp\Bundle\ApiPlatformBundle\Guesser\ApiErrorCodeGuesser;
+use Wakeapp\Bundle\ApiPlatformBundle\Guesser\ApiErrorCodeGuesserInterface;
+
+class ApiErrorCodeGuesserCompiler implements CompilerPassInterface
+{
+    /**
+     * {@inheritdoc}
+     */
+    public function process(ContainerBuilder $container): void
+    {
+        $guesserId = $container->getParameter('wakeapp_api_platform.error_code_guesser_service');
+        $container->getParameterBag()->remove('wakeapp_api_platform.error_code_guesser_service');
+
+        if (empty($guesserId)) {
+            $guesserId = ApiErrorCodeGuesser::class;
+            $container->setDefinition($guesserId, new Definition($guesserId));
+        }
+
+        if (!$container->hasDefinition($guesserId)) {
+            throw new ServiceNotFoundException($guesserId, ApiExceptionListener::class);
+        }
+
+        $guesserDefinition = $container->getDefinition($guesserId);
+
+        if (!is_subclass_of($guesserDefinition->getClass(), ApiErrorCodeGuesserInterface::class)) {
+            throw new InvalidArgumentException(sprintf(
+                '"%s" should implements "%s" interface',
+                $guesserDefinition->getClass(),
+                ApiErrorCodeGuesserInterface::class
+            ));
+        }
+
+        $container
+            ->getDefinition(ApiExceptionListener::class)
+            ->replaceArgument(0, $guesserDefinition)
+        ;
+    }
+}
