@@ -10,7 +10,7 @@
 # UDID Errors 2x
 20:     UDID not found
 21:     UDID can not be empty
-22:     UDID from the path and from the body are different
+22:     UDID from the path and from the token are different
 
 400:    Received incorrect request data
 401:    Unauthorized
