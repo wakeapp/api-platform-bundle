@@ -1,4 +1,4 @@
-## [Unreleased]
+## [0.1.1] - 2019-01-09
 ### Fixed
 - Fixed unclear translation for an error code `22`. 
 
