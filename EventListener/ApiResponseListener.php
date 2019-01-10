@@ -14,6 +14,7 @@ use Wakeapp\Bundle\ApiPlatformBundle\Exception\ApiException;
 use Wakeapp\Bundle\ApiPlatformBundle\Factory\ApiDtoFactory;
 use Wakeapp\Bundle\ApiPlatformBundle\HttpFoundation\ApiRequest;
 use Wakeapp\Bundle\ApiPlatformBundle\HttpFoundation\ApiResponse;
+use Wakeapp\Bundle\ApiPlatformBundle\Guesser\ApiErrorCodeGuesserInterface;
 
 class ApiResponseListener
 {
@@ -38,17 +39,20 @@ class ApiResponseListener
     private $translator = null;
 
     /**
+     * @param ApiErrorCodeGuesserInterface $guesser
      * @param ApiDtoFactory $dtoFactory
      * @param TranslatorInterface|null $translator
      * @param string $apiResultDtoClass
      * @param bool $debug
      */
     public function __construct(
+        ApiErrorCodeGuesserInterface $guesser,
         ApiDtoFactory $dtoFactory,
         ?TranslatorInterface $translator = null,
         string $apiResultDtoClass = ApiResultDto::class,
         bool $debug = false
     ) {
+        $this->guesser = $guesser;
         $this->apiResultDtoClass = $apiResultDtoClass;
         $this->debug = $debug;
         $this->dtoFactory = $dtoFactory;
@@ -69,6 +73,11 @@ class ApiResponseListener
 
         if ($exception instanceof ApiException) {
             $statusCode = $exception->getCode();
+        } else {
+            $apiErrorCode = $this->guesser->guessErrorCode($exception);
+            $apiException = new ApiException($apiErrorCode, $exception->getMessage(), $exception);
+
+            $event->setException($apiException);
         }
 
         $data = null;
@@ -98,8 +107,13 @@ class ApiResponseListener
             'message' => $message,
         ]);
 
-        $event->allowCustomResponseCode();
-        $event->setResponse(new JsonResponse($resultDto));
+        if ($statusCode < 400 || $statusCode >= 600) {
+            $event->allowCustomResponseCode();
+            
+            $statusCode = JsonResponse::HTTP_OK;
+        }
+
+        $event->setResponse(new JsonResponse($resultDto, $statusCode));
     }
 
     /**
