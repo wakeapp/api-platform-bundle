@@ -6,16 +6,10 @@ services:
         tags:
             - { name: kernel.event_listener, event: kernel.controller_arguments }
 
-    Wakeapp\Bundle\ApiPlatformBundle\EventListener\ApiExceptionListener:
-        class:      Wakeapp\Bundle\ApiPlatformBundle\EventListener\ApiExceptionListener
-        arguments:
-            - '@wakeapp_api_platform.guesser.api_error_code'
-        tags:
-            - { name: kernel.event_listener, event: kernel.exception, priority: 100 }
-
     Wakeapp\Bundle\ApiPlatformBundle\EventListener\ApiResponseListener:
         class:      Wakeapp\Bundle\ApiPlatformBundle\EventListener\ApiResponseListener
         arguments:
+            - '@wakeapp_api_platform.guesser.api_error_code'
             - '@wakeapp_api_platform.factory.api_dto'
             - '@translator'
         tags:
