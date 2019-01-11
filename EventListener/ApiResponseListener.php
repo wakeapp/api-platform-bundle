@@ -74,10 +74,7 @@ class ApiResponseListener
         if ($exception instanceof ApiException) {
             $statusCode = $exception->getCode();
         } else {
-            $apiErrorCode = $this->guesser->guessErrorCode($exception);
-            $apiException = new ApiException($apiErrorCode, $exception->getMessage(), $exception);
-
-            $event->setException($apiException);
+            $statusCode = $this->guesser->guessErrorCode($exception);
         }
 
         $data = null;
@@ -107,12 +104,13 @@ class ApiResponseListener
             'message' => $message,
         ]);
 
-        if ($statusCode < 400 || $statusCode >= 600) {
-            $event->allowCustomResponseCode();
-            
-            $statusCode = JsonResponse::HTTP_OK;
+        $httpStatus = JsonResponse::HTTP_OK;
+
+        if ($statusCode >= 400 && $statusCode < 600) {
+            $httpStatus = $statusCode;
         }
 
+        $event->allowCustomResponseCode();
         $event->setResponse(new JsonResponse($resultDto, $statusCode));
     }
 

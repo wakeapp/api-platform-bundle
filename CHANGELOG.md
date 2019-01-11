@@ -1,6 +1,6 @@
 ## [Unreleased]
 ### Changed
-- Right response code when get unexpected error.
+- Right response code when get HTTP error.
 
 ## [0.1.1] - 2019-01-09
 ### Fixed
