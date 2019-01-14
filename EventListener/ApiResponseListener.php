@@ -104,10 +104,10 @@ class ApiResponseListener
             'message' => $message,
         ]);
 
-        $httpStatus = JsonResponse::HTTP_OK;
+        $httpStatus = $statusCode;
 
         if ($statusCode <= 400 && $statusCode > 600) {
-            $httpStatus = $statusCode;
+            $httpStatus = JsonResponse::HTTP_OK;
         }
 
         $event->allowCustomResponseCode();
