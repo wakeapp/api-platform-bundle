@@ -14,9 +14,9 @@ class ApiErrorCodeGuesser implements ApiErrorCodeGuesserInterface
     /**
      * @param Throwable $exception
      *
-     * @return int
+     * @return int|null
      */
-    public function guessErrorCode(Throwable $exception): int
+    public function guessErrorCode(Throwable $exception): ?int
     {
         if ($exception instanceof NotFoundHttpException) {
             return ApiException::HTTP_NOT_FOUND;
@@ -25,7 +25,11 @@ class ApiErrorCodeGuesser implements ApiErrorCodeGuesserInterface
         if ($exception instanceof MethodNotAllowedHttpException) {
             return ApiException::HTTP_METHOD_NOT_ALLOWED;
         }
+        
+        if ($exception instanceof ApiException) {
+            return $exception->getCode();
+        }
 
-        return ApiException::HTTP_INTERNAL_SERVER_ERROR;
+        return null;
     }
 }
