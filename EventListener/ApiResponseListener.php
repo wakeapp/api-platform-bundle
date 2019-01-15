@@ -69,22 +69,27 @@ class ApiResponseListener
         }
 
         $exception = $event->getException();
-        $statusCode = ApiException::HTTP_INTERNAL_SERVER_ERROR;
 
-        if ($exception instanceof ApiException) {
-            $statusCode = $exception->getCode();
+        $errorCode = $this->guesser->guessErrorCode($exception);
+
+        if (!$errorCode) {
+            $errorCode = $exception->getCode();
+        }
+        
+        if ($errorCode >= 400 && $errorCode < 600) {
+            $httpStatusCode = $errorCode;
         } else {
-            $statusCode = $this->guesser->guessErrorCode($exception);
+            $httpStatusCode = JsonResponse::HTTP_OK;
         }
 
         $data = null;
 
-        if ($statusCode === ApiException::USER_INFO_ERROR) {
+        if ($errorCode === ApiException::USER_INFO_ERROR) {
             $message = $exception->getMessage();
         } elseif ($this->translator) {
-            $message = $this->translator->trans((string) $statusCode, [], 'api_response_code');
+            $message = $this->translator->trans((string) $errorCode, [], 'api_response_code');
         } else {
-            $message = (string) $statusCode;
+            $message = (string) $errorCode;
         }
 
         if ($this->debug) {
@@ -100,18 +105,12 @@ class ApiResponseListener
 
         $resultDto = $this->dtoFactory->createApiDto($this->apiResultDtoClass, [
             'data' => $data,
-            'code' => $statusCode,
+            'code' => $errorCode,
             'message' => $message,
         ]);
 
-        $httpStatus = $statusCode;
-
-        if ($statusCode <= 400 && $statusCode > 600) {
-            $httpStatus = JsonResponse::HTTP_OK;
-        }
-
         $event->allowCustomResponseCode();
-        $event->setResponse(new JsonResponse($resultDto, $httpStatus));
+        $event->setResponse(new JsonResponse($resultDto, $httpStatusCode));
     }
 
     /**
