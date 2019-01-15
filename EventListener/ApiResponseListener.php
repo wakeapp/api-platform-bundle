@@ -75,7 +75,11 @@ class ApiResponseListener
         if (!$errorCode) {
             $errorCode = $exception->getCode();
         }
-        
+
+        if (!$errorCode) {
+            $errorCode = ApiException::HTTP_INTERNAL_SERVER_ERROR;
+        }
+
         if ($errorCode >= 400 && $errorCode < 600) {
             $httpStatusCode = $errorCode;
         } else {
