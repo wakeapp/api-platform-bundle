@@ -39,6 +39,11 @@ class ApiResponseListener
     private $translator = null;
 
     /**
+     * @var ApiErrorCodeGuesserInterface
+     */
+    private $guesser;
+
+    /**
      * @param ApiErrorCodeGuesserInterface $guesser
      * @param ApiDtoFactory $dtoFactory
      * @param TranslatorInterface|null $translator
