@@ -1,4 +1,4 @@
-## [Unreleased]
+## [1.0.0] - 2019-03-25
 ### Changed
 - Right response code when get HTTP error.
 
