@@ -14,6 +14,7 @@ use Wakeapp\Bundle\ApiPlatformBundle\Exception\ApiException;
 use Wakeapp\Bundle\ApiPlatformBundle\Factory\ApiDtoFactory;
 use Wakeapp\Bundle\ApiPlatformBundle\HttpFoundation\ApiRequest;
 use Wakeapp\Bundle\ApiPlatformBundle\HttpFoundation\ApiResponse;
+use Wakeapp\Bundle\ApiPlatformBundle\Guesser\ApiErrorCodeGuesserInterface;
 
 class ApiResponseListener
 {
@@ -38,17 +39,25 @@ class ApiResponseListener
     private $translator = null;
 
     /**
+     * @var ApiErrorCodeGuesserInterface
+     */
+    private $guesser;
+
+    /**
+     * @param ApiErrorCodeGuesserInterface $guesser
      * @param ApiDtoFactory $dtoFactory
      * @param TranslatorInterface|null $translator
      * @param string $apiResultDtoClass
      * @param bool $debug
      */
     public function __construct(
+        ApiErrorCodeGuesserInterface $guesser,
         ApiDtoFactory $dtoFactory,
         ?TranslatorInterface $translator = null,
         string $apiResultDtoClass = ApiResultDto::class,
         bool $debug = false
     ) {
+        $this->guesser = $guesser;
         $this->apiResultDtoClass = $apiResultDtoClass;
         $this->debug = $debug;
         $this->dtoFactory = $dtoFactory;
@@ -65,20 +74,31 @@ class ApiResponseListener
         }
 
         $exception = $event->getException();
-        $statusCode = ApiException::HTTP_INTERNAL_SERVER_ERROR;
 
-        if ($exception instanceof ApiException) {
-            $statusCode = $exception->getCode();
+        $errorCode = $this->guesser->guessErrorCode($exception);
+
+        if (!$errorCode) {
+            $errorCode = $exception->getCode();
+        }
+
+        if (!$errorCode) {
+            $errorCode = ApiException::HTTP_INTERNAL_SERVER_ERROR;
+        }
+
+        if ($errorCode >= 400 && $errorCode < 600) {
+            $httpStatusCode = $errorCode;
+        } else {
+            $httpStatusCode = JsonResponse::HTTP_OK;
         }
 
         $data = null;
 
-        if ($statusCode === ApiException::USER_INFO_ERROR) {
+        if ($errorCode === ApiException::USER_INFO_ERROR) {
             $message = $exception->getMessage();
         } elseif ($this->translator) {
-            $message = $this->translator->trans((string) $statusCode, [], 'api_response_code');
+            $message = $this->translator->trans((string) $errorCode, [], 'api_response_code');
         } else {
-            $message = (string) $statusCode;
+            $message = (string) $errorCode;
         }
 
         if ($this->debug) {
@@ -94,12 +114,12 @@ class ApiResponseListener
 
         $resultDto = $this->dtoFactory->createApiDto($this->apiResultDtoClass, [
             'data' => $data,
-            'code' => $statusCode,
+            'code' => $errorCode,
             'message' => $message,
         ]);
 
         $event->allowCustomResponseCode();
-        $event->setResponse(new JsonResponse($resultDto));
+        $event->setResponse(new JsonResponse($resultDto, $httpStatusCode));
     }
 
     /**

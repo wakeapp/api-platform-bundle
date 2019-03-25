@@ -13,7 +13,7 @@ interface ApiErrorCodeGuesserInterface
      *
      * @param Throwable $exception
      *
-     * @return int
+     * @return int|null
      */
-    public function guessErrorCode(Throwable $exception): int;
+    public function guessErrorCode(Throwable $exception): ?int;
 }

@@ -1,3 +1,7 @@
+## [Unreleased]
+### Changed
+- Right response code when get HTTP error.
+
 ## [0.1.2] - 2019-03-25
 ### Changed
 - Updated `adrenalinkin/swagger-resolver-bundle` to the `0.4.0` version.

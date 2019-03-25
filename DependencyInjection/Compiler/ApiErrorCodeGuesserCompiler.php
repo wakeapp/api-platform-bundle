@@ -9,7 +9,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Exception\InvalidArgumentException;
 use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
-use Wakeapp\Bundle\ApiPlatformBundle\EventListener\ApiExceptionListener;
+use Wakeapp\Bundle\ApiPlatformBundle\EventListener\ApiResponseListener;
 use Wakeapp\Bundle\ApiPlatformBundle\Guesser\ApiErrorCodeGuesser;
 use Wakeapp\Bundle\ApiPlatformBundle\Guesser\ApiErrorCodeGuesserInterface;
 
@@ -29,7 +29,7 @@ class ApiErrorCodeGuesserCompiler implements CompilerPassInterface
         }
 
         if (!$container->hasDefinition($guesserId)) {
-            throw new ServiceNotFoundException($guesserId, ApiExceptionListener::class);
+            throw new ServiceNotFoundException($guesserId, ApiResponseListener::class);
         }
 
         $guesserDefinition = $container->getDefinition($guesserId);
@@ -43,7 +43,7 @@ class ApiErrorCodeGuesserCompiler implements CompilerPassInterface
         }
 
         $container
-            ->getDefinition(ApiExceptionListener::class)
+            ->getDefinition(ApiResponseListener::class)
             ->replaceArgument(0, $guesserDefinition)
         ;
     }
