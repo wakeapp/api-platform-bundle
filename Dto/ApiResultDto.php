@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace Wakeapp\Bundle\ApiPlatformBundle\Dto;
 
-use Wakeapp\Component\DtoResolver\Dto\AbstractDtoResolver;
 use Wakeapp\Component\DtoResolver\Dto\DtoResolverInterface;
+use Wakeapp\Component\DtoResolver\Dto\DtoResolverTrait;
 
-class ApiResultDto extends AbstractDtoResolver implements ApiResultDtoInterface
+class ApiResultDto implements ApiResultDtoInterface
 {
+    use DtoResolverTrait;
+
     /**
      * @var int
      */

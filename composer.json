@@ -19,7 +19,7 @@
         "symfony/dependency-injection":         "~2.8||~3.0||~4.0",
         "symfony/http-foundation":              "~2.8||~3.0||~4.0",
         "symfony/http-kernel":                  "~2.8||~3.0||~4.0",
-        "wakeapp/dto-resolver":                 "~0.1"
+        "wakeapp/dto-resolver":                 "^0.3.1"
     },
 
     "suggest": {

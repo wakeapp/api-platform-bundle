@@ -1,3 +1,8 @@
+## [Unreleased]
+### Changed
+- Updated `wakeapp/dto-resolver` to the `v0.3.1` version.
+- Use `DtoResolverTrait` instead of `AbstractDtoResolver` in `ApiResultDto`, `ApiDebugExceptionResultDto`.
+
 ## [1.0.0] - 2019-03-25
 ### Changed
 - Right response code when get HTTP error.

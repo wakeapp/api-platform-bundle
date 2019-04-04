@@ -129,7 +129,8 @@ declare(strict_types=1);
 namespace App\Dto;
 
 use Swagger\Annotations as SWG;
-use Wakeapp\Component\DtoResolver\Dto\AbstractDtoResolver;
+use Wakeapp\Component\DtoResolver\Dto\DtoResolverTrait;
+use Wakeapp\Component\DtoResolver\Dto\DtoResolverInterface;
 
 /**
  * @SWG\Definition(
@@ -138,8 +139,10 @@ use Wakeapp\Component\DtoResolver\Dto\AbstractDtoResolver;
  *      required={"email", "firstName", "lastName"},
  * )
  */
-class ProfileResultDto extends AbstractDtoResolver
+class ProfileResultDto implements DtoResolverInterface
 {
+    use DtoResolverTrait;
+    
     /**
      * @var string
      *
