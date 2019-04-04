@@ -6,10 +6,13 @@ namespace Wakeapp\Bundle\ApiPlatformBundle\Dto;
 
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Throwable;
-use Wakeapp\Component\DtoResolver\Dto\AbstractDtoResolver;
+use Wakeapp\Component\DtoResolver\Dto\DtoResolverInterface;
+use Wakeapp\Component\DtoResolver\Dto\DtoResolverTrait;
 
-class ApiDebugExceptionResultDto extends AbstractDtoResolver
+class ApiDebugExceptionResultDto implements DtoResolverInterface
 {
+    use DtoResolverTrait;
+
     /**
      * @var int
      */
@@ -38,18 +41,19 @@ class ApiDebugExceptionResultDto extends AbstractDtoResolver
     /**
      * {@inheritdoc}
      */
-    public function resolve(array $data): AbstractDtoResolver
+    public function resolve(array $data): void
     {
         $previous = $data['previous'];
 
         if (!$previous instanceof Throwable) {
-            return parent::resolve($data);
+            $this->parentResolve($data);
+
+            return;
         }
 
         $previousDto = new self();
-        $previousDto
-            ->injectResolver($this->getOptionsResolver())
-            ->resolve([
+        $previousDto->injectResolver($this->getOptionsResolver());
+        $previousDto->resolve([
                 'code' => $previous->getCode(),
                 'file' => $previous->getFile(),
                 'line' => $previous->getLine(),
@@ -60,7 +64,30 @@ class ApiDebugExceptionResultDto extends AbstractDtoResolver
 
         $data['previous'] = $previousDto;
 
-        return parent::resolve($data);
+        $this->parentResolve($data);
+    }
+
+    /**
+     * @param array $data
+     */
+    public function parentResolve(array $data): void
+    {
+        $resolver = $this->getOptionsResolver();
+
+        $normalizedData = [];
+
+        foreach ($data as $propertyName => $value) {
+            $normalizedPropertyName = $this->normalizeDefinedKey($propertyName);
+            $normalizedData[$normalizedPropertyName] = $value;
+        }
+
+        $resolvedData = $resolver->resolve($this->getOnlyDefinedData($normalizedData));
+
+        foreach ($resolvedData as $propertyName => $value) {
+            if (property_exists($this, $propertyName)) {
+                $this->$propertyName = $value;
+            }
+        }
     }
 
     /**
