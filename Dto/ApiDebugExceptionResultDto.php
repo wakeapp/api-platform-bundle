@@ -11,7 +11,9 @@ use Wakeapp\Component\DtoResolver\Dto\DtoResolverTrait;
 
 class ApiDebugExceptionResultDto implements DtoResolverInterface
 {
-    use DtoResolverTrait;
+    use DtoResolverTrait {
+        DtoResolverTrait::resolve as parentResolve;
+    }
 
     /**
      * @var int
@@ -65,29 +67,6 @@ class ApiDebugExceptionResultDto implements DtoResolverInterface
         $data['previous'] = $previousDto;
 
         $this->parentResolve($data);
-    }
-
-    /**
-     * @param array $data
-     */
-    public function parentResolve(array $data): void
-    {
-        $resolver = $this->getOptionsResolver();
-
-        $normalizedData = [];
-
-        foreach ($data as $propertyName => $value) {
-            $normalizedPropertyName = $this->normalizeDefinedKey($propertyName);
-            $normalizedData[$normalizedPropertyName] = $value;
-        }
-
-        $resolvedData = $resolver->resolve($this->getOnlyDefinedData($normalizedData));
-
-        foreach ($resolvedData as $propertyName => $value) {
-            if (property_exists($this, $propertyName)) {
-                $this->$propertyName = $value;
-            }
-        }
     }
 
     /**
