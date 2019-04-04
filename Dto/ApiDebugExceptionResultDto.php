@@ -102,11 +102,11 @@ class ApiDebugExceptionResultDto implements DtoResolverInterface
     }
 
     /**
-     * @param OptionsResolver $options
+     * @param OptionsResolver $resolver
      */
-    protected function configureOptions(OptionsResolver $options): void
+    protected function configureOptions(OptionsResolver $resolver): void
     {
-        $options->setDefined([
+        $resolver->setDefined([
             'code',
             'file',
             'line',
