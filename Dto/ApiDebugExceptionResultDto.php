@@ -102,7 +102,7 @@ class ApiDebugExceptionResultDto implements DtoResolverInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @param OptionsResolver $options
      */
     protected function configureOptions(OptionsResolver $options): void
     {
