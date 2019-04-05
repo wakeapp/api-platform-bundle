@@ -15,6 +15,7 @@ use Wakeapp\Bundle\ApiPlatformBundle\Factory\ApiDtoFactory;
 use Wakeapp\Bundle\ApiPlatformBundle\HttpFoundation\ApiRequest;
 use Wakeapp\Bundle\ApiPlatformBundle\HttpFoundation\ApiResponse;
 use Wakeapp\Bundle\ApiPlatformBundle\Guesser\ApiErrorCodeGuesserInterface;
+use Wakeapp\Bundle\ApiPlatformBundle\Logger\ApiPlatformLogger;
 
 class ApiResponseListener
 {
@@ -44,21 +45,29 @@ class ApiResponseListener
     private $guesser;
 
     /**
+     * @var ApiPlatformLogger
+     */
+    private $logger;
+
+    /**
      * @param ApiErrorCodeGuesserInterface $guesser
      * @param ApiDtoFactory $dtoFactory
      * @param TranslatorInterface|null $translator
      * @param string $apiResultDtoClass
      * @param bool $debug
+     * @param ApiPlatformLogger $logger
      */
     public function __construct(
         ApiErrorCodeGuesserInterface $guesser,
         ApiDtoFactory $dtoFactory,
+        ApiPlatformLogger $logger,
         ?TranslatorInterface $translator = null,
         string $apiResultDtoClass = ApiResultDto::class,
         bool $debug = false
     ) {
         $this->guesser = $guesser;
         $this->apiResultDtoClass = $apiResultDtoClass;
+        $this->logger = $logger;
         $this->debug = $debug;
         $this->dtoFactory = $dtoFactory;
         $this->translator = $translator;
@@ -108,9 +117,14 @@ class ApiResponseListener
                 'file' => $exception->getFile(),
                 'line' => $exception->getLine(),
                 'message' => $exception->getMessage(),
-                'previous' => $exception->getPrevious(),
+                'stackTrace' => explode("\n", $exception->getTraceAsString()),
             ]);
         }
+
+        $path = $event->getRequest()->getRequestUri();
+        $method = $event->getRequest()->getMethod();
+
+        $this->logger->notice(sprintf('%s %s', $method, $path), [$exception]);
 
         $resultDto = $this->dtoFactory->createApiDto($this->apiResultDtoClass, [
             'data' => $data,
