@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Wakeapp\Bundle\ApiPlatformBundle\Dto;
 
-use Symfony\Component\OptionsResolver\OptionsResolver;
-use Throwable;
 use Wakeapp\Component\DtoResolver\Dto\DtoResolverInterface;
 use Wakeapp\Component\DtoResolver\Dto\DtoResolverTrait;
 

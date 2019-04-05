@@ -1,3 +1,8 @@
+## [1.0.3] - 2019-04-05
+### Added
+- Added `stackTrace` property in `ApiDebugExceptionResultDto`.
+- Added `ApiPlatformLogger`.
+
 ## [1.0.1] - 2019-04-05
 ### Changed
 - Updated `wakeapp/dto-resolver` to the `v0.3.1` version.
