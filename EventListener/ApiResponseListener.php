@@ -112,12 +112,15 @@ class ApiResponseListener
 
         if ($this->debug) {
             $data = new ApiDebugExceptionResultDto();
+
+            $stackTrace = explode("\n", $exception->getTraceAsString());
+
             $data->resolve([
                 'code' => $exception->getCode(),
                 'file' => $exception->getFile(),
                 'line' => $exception->getLine(),
                 'message' => $exception->getMessage(),
-                'stackTrace' => explode("\n", $exception->getTraceAsString()),
+                'stackTrace' => $stackTrace,
             ]);
         }
 
