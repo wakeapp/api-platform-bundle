@@ -1,4 +1,4 @@
-## [Unreleased]
+## [1.0.1] - 2019-04-05
 ### Changed
 - Updated `wakeapp/dto-resolver` to the `v0.3.1` version.
 - Use `DtoResolverTrait` instead of `AbstractDtoResolver` in `ApiResultDto`, `ApiDebugExceptionResultDto`.
