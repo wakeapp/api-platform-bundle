@@ -36,38 +36,9 @@ class ApiDebugExceptionResultDto implements DtoResolverInterface
     protected $message;
 
     /**
-     * @var self
+     * @var array
      */
-    protected $previous;
-
-    /**
-     * {@inheritdoc}
-     */
-    public function resolve(array $data): void
-    {
-        $previous = $data['previous'];
-
-        if (!$previous instanceof Throwable) {
-            $this->parentResolve($data);
-
-            return;
-        }
-
-        $previousDto = new self();
-        $previousDto->injectResolver($this->getOptionsResolver());
-        $previousDto->resolve([
-                'code' => $previous->getCode(),
-                'file' => $previous->getFile(),
-                'line' => $previous->getLine(),
-                'message' => $previous->getMessage(),
-                'previous' => $previous->getPrevious(),
-            ])
-        ;
-
-        $data['previous'] = $previousDto;
-
-        $this->parentResolve($data);
-    }
+    protected $stackTrace;
 
     /**
      * @return int
@@ -102,16 +73,10 @@ class ApiDebugExceptionResultDto implements DtoResolverInterface
     }
 
     /**
-     * @param OptionsResolver $resolver
+     * @return array
      */
-    protected function configureOptions(OptionsResolver $resolver): void
+    public function getStackTrace(): array
     {
-        $resolver->setDefined([
-            'code',
-            'file',
-            'line',
-            'message',
-            'previous',
-        ]);
+        return $this->stackTrace;
     }
 }
