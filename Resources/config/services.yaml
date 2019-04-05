@@ -11,6 +11,7 @@ services:
         arguments:
             - '@wakeapp_api_platform.guesser.api_error_code'
             - '@wakeapp_api_platform.factory.api_dto'
+            - '@Wakeapp\Bundle\ApiPlatformBundle\Logger\ApiPlatformLogger'
             - '@translator'
         tags:
             - { name: kernel.event_listener, event: kernel.exception, priority: 1 }
@@ -22,3 +23,9 @@ services:
             - '@linkin_swagger_resolver.factory'
     wakeapp_api_platform.factory.api_dto:
         alias:      Wakeapp\Bundle\ApiPlatformBundle\Factory\ApiDtoFactory
+
+    Wakeapp\Bundle\ApiPlatformBundle\Logger\ApiPlatformLogger:
+        calls:
+            - ['setLogger', ['@?logger']]
+        tags:
+            - { name: 'monolog.logger', channel: 'api_platform' }
