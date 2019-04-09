@@ -1,3 +1,7 @@
+## [Unreleased]
+### Changed
+- Renamed monolog.logger channel from `api_platform` to `wakeapp_api_platform`.
+
 ## [1.0.3] - 2019-04-05
 ### Added
 - Added `stackTrace` property in `ApiDebugExceptionResultDto`.
