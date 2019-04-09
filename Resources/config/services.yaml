@@ -28,4 +28,4 @@ services:
         calls:
             - ['setLogger', ['@?logger']]
         tags:
-            - { name: 'monolog.logger', channel: 'api_platform' }
+            - { name: 'monolog.logger', channel: 'wakeapp_api_platform' }
