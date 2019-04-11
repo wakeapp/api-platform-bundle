@@ -1,4 +1,4 @@
-## [Unreleased]
+## [1.0.5] - 2019-04-11
 ### Changed
 - Downgraded `DtoResolverInterface` to `JsonSerializable` in the `ApiResponse`.
 - Updated `wakeapp/dto-resolver` to the `v0.4.0` version.
