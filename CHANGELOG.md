@@ -1,3 +1,8 @@
+## [Unreleased]
+### Changed
+- Downgraded `DtoResolverInterface` to `JsonSerializable` in the `ApiResponse`.
+- Updated `wakeapp/dto-resolver` to the `v0.4.0` version.
+
 ## [1.0.4] - 2019-04-09
 ### Changed
 - Renamed monolog.logger channel from `api_platform` to `wakeapp_api_platform`.
