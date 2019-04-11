@@ -4,21 +4,21 @@ declare(strict_types=1);
 
 namespace Wakeapp\Bundle\ApiPlatformBundle\HttpFoundation;
 
+use JsonSerializable;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Wakeapp\Component\DtoResolver\Dto\DtoResolverInterface;
 
 class ApiResponse extends JsonResponse
 {
     /**
-     * @var DtoResolverInterface|null
+     * @var JsonSerializable|null
      */
     private $dataDto = null;
 
     /**
-     * @param DtoResolverInterface|null $dataDto
+     * @param JsonSerializable|null $dataDto
      * @param array $headers
      */
-    public function __construct(?DtoResolverInterface $dataDto = null, array $headers = [])
+    public function __construct(?JsonSerializable $dataDto = null, array $headers = [])
     {
         $this->dataDto = $dataDto;
 
@@ -26,9 +26,9 @@ class ApiResponse extends JsonResponse
     }
 
     /**
-     * @return DtoResolverInterface|null
+     * @return JsonSerializable|null
      */
-    public function getDataDto(): ?DtoResolverInterface
+    public function getDataDto(): ?JsonSerializable
     {
         return $this->dataDto;
     }
