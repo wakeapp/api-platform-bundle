@@ -1,3 +1,8 @@
+## [Unreleased]
+### Changed
+- Updated `wakeapp/dto-resolver` to the `v0.3.1` version.
+- `dataDto` property in `ApiResponse` class have `JsonSerializable` type now.
+
 ## [1.0.4] - 2019-04-09
 ### Changed
 - Renamed monolog.logger channel from `api_platform` to `wakeapp_api_platform`.
