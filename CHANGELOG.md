@@ -1,3 +1,7 @@
+## [Unreleased]
+### Fixed
+- Return `ApiResponse` instead of `JsonResponse` in the `ApiResponseListener`.
+
 ## [1.0.5] - 2019-04-11
 ### Changed
 - Downgraded `DtoResolverInterface` to `JsonSerializable` in the `ApiResponse`.

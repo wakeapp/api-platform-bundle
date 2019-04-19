@@ -4,18 +4,19 @@ declare(strict_types=1);
 
 namespace Wakeapp\Bundle\ApiPlatformBundle\EventListener;
 
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Wakeapp\Bundle\ApiPlatformBundle\Dto\ApiDebugExceptionResultDto;
 use Wakeapp\Bundle\ApiPlatformBundle\Dto\ApiResultDto;
 use Wakeapp\Bundle\ApiPlatformBundle\Exception\ApiException;
 use Wakeapp\Bundle\ApiPlatformBundle\Factory\ApiDtoFactory;
+use Wakeapp\Bundle\ApiPlatformBundle\Guesser\ApiErrorCodeGuesserInterface;
 use Wakeapp\Bundle\ApiPlatformBundle\HttpFoundation\ApiRequest;
 use Wakeapp\Bundle\ApiPlatformBundle\HttpFoundation\ApiResponse;
-use Wakeapp\Bundle\ApiPlatformBundle\Guesser\ApiErrorCodeGuesserInterface;
 use Wakeapp\Bundle\ApiPlatformBundle\Logger\ApiPlatformLogger;
+use function explode;
+use function sprintf;
 
 class ApiResponseListener
 {
@@ -33,6 +34,11 @@ class ApiResponseListener
      * @var ApiDtoFactory
      */
     private $dtoFactory;
+
+    /**
+     * @var bool
+     */
+    private $isException = false;
 
     /**
      * @var TranslatorInterface|null
@@ -97,7 +103,7 @@ class ApiResponseListener
         if ($errorCode >= 400 && $errorCode < 600) {
             $httpStatusCode = $errorCode;
         } else {
-            $httpStatusCode = JsonResponse::HTTP_OK;
+            $httpStatusCode = ApiResponse::HTTP_OK;
         }
 
         $data = null;
@@ -135,8 +141,13 @@ class ApiResponseListener
             'message' => $message,
         ]);
 
+        $this->isException = true;
+
+        $response = new ApiResponse($resultDto);
+        $response->setStatusCode($httpStatusCode);
+
         $event->allowCustomResponseCode();
-        $event->setResponse(new JsonResponse($resultDto, $httpStatusCode));
+        $event->setResponse($response);
     }
 
     /**
@@ -150,8 +161,14 @@ class ApiResponseListener
             return;
         }
 
+        if ($this->isException) {
+            return;
+        }
+
+        $message = '0';
+
         if ($this->translator) {
-            $message = $this->translator->trans('0', [], 'api_response_code');
+            $message = $this->translator->trans($message, [], 'api_response_code');
         }
 
         $resultDto = $this->dtoFactory->createApiDto($this->apiResultDtoClass, [
@@ -160,6 +177,6 @@ class ApiResponseListener
             'message' => $message,
         ]);
 
-        $event->setResponse(new JsonResponse($resultDto));
+        $event->setResponse(new ApiResponse($resultDto));
     }
 }
