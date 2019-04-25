@@ -1,4 +1,8 @@
 ## [Unreleased]
+### Changed
+- Added argument resolver instead controller listener.
+### Removed
+- Removed `ApiControllerArgumentListener`.
 ### Fixed
 - Return `ApiResponse` instead of `JsonResponse` in the `ApiResponseListener`.
 

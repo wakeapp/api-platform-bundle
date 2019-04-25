@@ -1,10 +1,15 @@
 services:
-    Wakeapp\Bundle\ApiPlatformBundle\EventListener\ApiControllerArgumentListener:
-        class:      Wakeapp\Bundle\ApiPlatformBundle\EventListener\ApiControllerArgumentListener
+    Wakeapp\Bundle\ApiPlatformBundle\ArgumentResolver\ApiCollectionEntryDtoArgumentResolver:
         arguments:
-            - '@linkin_swagger_resolver.factory'
+            - '@Linkin\Bundle\SwaggerResolverBundle\Factory\SwaggerResolverFactory'
         tags:
-            - { name: kernel.event_listener, event: kernel.controller_arguments }
+            - { name: controller.argument_value_resolver, priority: 250 }
+
+    Wakeapp\Bundle\ApiPlatformBundle\ArgumentResolver\ApiEntryDtoArgumentResolver:
+        arguments:
+            - '@Linkin\Bundle\SwaggerResolverBundle\Factory\SwaggerResolverFactory'
+        tags:
+            - { name: controller.argument_value_resolver, priority: 250 }
 
     Wakeapp\Bundle\ApiPlatformBundle\EventListener\ApiResponseListener:
         class:      Wakeapp\Bundle\ApiPlatformBundle\EventListener\ApiResponseListener
@@ -20,7 +25,7 @@ services:
     Wakeapp\Bundle\ApiPlatformBundle\Factory\ApiDtoFactory:
         class:      Wakeapp\Bundle\ApiPlatformBundle\Factory\ApiDtoFactory
         arguments:
-            - '@linkin_swagger_resolver.factory'
+            - '@Linkin\Bundle\SwaggerResolverBundle\Factory\SwaggerResolverFactory'
     wakeapp_api_platform.factory.api_dto:
         alias:      Wakeapp\Bundle\ApiPlatformBundle\Factory\ApiDtoFactory
 

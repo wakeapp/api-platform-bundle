@@ -9,9 +9,7 @@ use Wakeapp\Component\DtoResolver\Dto\DtoResolverTrait;
 
 class ApiDebugExceptionResultDto implements DtoResolverInterface
 {
-    use DtoResolverTrait {
-        DtoResolverTrait::resolve as parentResolve;
-    }
+    use DtoResolverTrait;
 
     /**
      * @var int
