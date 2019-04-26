@@ -47,8 +47,11 @@ class ApiException extends RuntimeException
     // Receipt Errors 9xx
     public const RECEIPT_UNEXPECTED_ERROR = 900;
 
+    // Api version Errors 11xx
+    public const API_VERSION_MINIMAL_NO_MATCHING = 1101;
+
     /**
-     * @var int customizable error for informate user
+     * @var int customizable error for which should be displayed for user as is
      */
     public const USER_INFO_ERROR = 10000;
 

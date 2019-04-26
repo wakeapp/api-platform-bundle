@@ -12,6 +12,8 @@ use Wakeapp\Bundle\ApiPlatformBundle\Guesser\ApiAreaGuesserInterface;
 
 class ApiKernel extends HttpKernel
 {
+    public const API_VERSION_BY_DEFAULT = 1;
+
     /**
      * @var ApiAreaGuesserInterface
      */
@@ -23,7 +25,8 @@ class ApiKernel extends HttpKernel
     public function handle(Request $request, $type = HttpKernelInterface::MASTER_REQUEST, $catch = true): Response
     {
         if ($this->guesser->isApiRequest($request)) {
-            $request = new ApiRequest($request);
+            $apiVersion = $this->guesser->getApiVersion($request) ?? self::API_VERSION_BY_DEFAULT;
+            $request = new ApiRequest($request, $apiVersion);
         }
 
         return parent::handle($request, $type, $catch);

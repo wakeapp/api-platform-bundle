@@ -9,6 +9,15 @@ use Symfony\Component\HttpFoundation\Request;
 interface ApiAreaGuesserInterface
 {
     /**
+     * Returns api version of the request
+     *
+     * @param Request $request
+     *
+     * @return int|null
+     */
+    public function getApiVersion(Request $request): ?int;
+
+    /**
      * Check is received request related to the API area
      *
      * @param Request $request

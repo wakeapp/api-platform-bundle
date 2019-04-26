@@ -78,6 +78,23 @@ use Wakeapp\Bundle\ApiPlatformBundle\Guesser\ApiAreaGuesserInterface;
 class ApiAreaGuesser implements ApiAreaGuesserInterface
 {
     /**
+     * {@inheritDoc}
+     */
+    public function getApiVersion(Request $request): ?int
+    {
+        $apiVersionMatch = [];
+        preg_match('/^\/v([\d]+)\//i', $request->getPathInfo(), $apiVersionMatch);
+
+        if (empty($apiVersionMatch)) {
+            return null;
+        }
+
+        $apiVersion = (int) end($apiVersionMatch);
+
+        return $apiVersion;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function isApiRequest(Request $request): bool
@@ -109,6 +126,9 @@ wakeapp_api_platform:
     # идентификатор сервиса для глобального отлавливания ошибок и выдачи специализированных сообщений вместо 500
     error_code_guesser_service: Wakeapp\Bundle\ApiPlatformBundle\Guesser\ApiErrorCodeGuesser
 
+    # Минимально допустимая версия API.
+    minimal_api_version:        1
+
     # флаг для отладки ошибок - если установлен в true - ответ ошибки содержит trace.
     response_debug:             false
 ```
@@ -122,9 +142,7 @@ wakeapp_api_platform:
 Для начала нам необходимо создать DTO возвращаемых данных:
 
 ```php
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace App\Dto;
 

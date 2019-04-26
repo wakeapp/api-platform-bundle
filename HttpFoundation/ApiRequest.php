@@ -6,6 +6,7 @@ namespace Wakeapp\Bundle\ApiPlatformBundle\HttpFoundation;
 
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
+use function json_decode;
 
 class ApiRequest extends Request
 {
@@ -17,10 +18,20 @@ class ApiRequest extends Request
     public $body;
 
     /**
-     * @param Request $request
+     * What API version used in request
+     *
+     * @var int
      */
-    public function __construct(Request $request)
+    private $apiVersion;
+
+    /**
+     * @param Request $request
+     * @param int $apiVersion
+     */
+    public function __construct(Request $request, int $apiVersion)
     {
+        $this->apiVersion = $apiVersion;
+
         parent::__construct(
             $request->query->all(),
             $request->request->all(),
@@ -30,6 +41,14 @@ class ApiRequest extends Request
             $request->server->all(),
             $request->getContent()
         );
+    }
+
+    /**
+     * @return int
+     */
+    public function getApiVersion(): int
+    {
+        return $this->apiVersion;
     }
 
     /**
