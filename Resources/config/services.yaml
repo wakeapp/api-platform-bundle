@@ -22,6 +22,12 @@ services:
             - { name: kernel.event_listener, event: kernel.exception, priority: 1 }
             - { name: kernel.event_listener, event: kernel.response }
 
+    Wakeapp\Bundle\ApiPlatformBundle\EventListener\MinimalApiVersionRequestListener:
+        arguments:
+            - '%wakeapp_api_platform.minimal_api_version%'
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, priority: 128 }
+
     Wakeapp\Bundle\ApiPlatformBundle\Factory\ApiDtoFactory:
         class:      Wakeapp\Bundle\ApiPlatformBundle\Factory\ApiDtoFactory
         arguments:

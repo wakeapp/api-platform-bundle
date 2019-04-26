@@ -35,3 +35,6 @@
 
 # Receipt Errors 9xx
 900:    Unexpected receipt error
+
+# Api version Errors 11xx
+1101:   The minimum version of api does not match the stated

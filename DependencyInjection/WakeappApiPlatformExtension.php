@@ -19,15 +19,14 @@ class WakeappApiPlatformExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        $apiResultDtoClass = $config['api_result_dto_class'];
-        $apiAreaGuesser = $config['api_area_guesser_service'];
-        $errorCodeGuesser = $config['error_code_guesser_service'];
-        $requestDebug = $config['response_debug'];
-
-        $container->setParameter('wakeapp_api_platform.api_result_dto_class', $apiResultDtoClass);
-        $container->setParameter('wakeapp_api_platform.api_area_guesser_service', $apiAreaGuesser);
-        $container->setParameter('wakeapp_api_platform.error_code_guesser_service', $errorCodeGuesser);
-        $container->setParameter('wakeapp_api_platform.response_debug', $requestDebug);
+        $container->setParameter('wakeapp_api_platform.api_result_dto_class', $config['api_result_dto_class']);
+        $container->setParameter('wakeapp_api_platform.api_area_guesser_service', $config['api_area_guesser_service']);
+        $container->setParameter(
+            'wakeapp_api_platform.error_code_guesser_service',
+            $config['error_code_guesser_service']
+        );
+        $container->setParameter('wakeapp_api_platform.response_debug', $config['response_debug']);
+        $container->setParameter('wakeapp_api_platform.minimal_api_version', $config['minimal_api_version']);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.yaml');

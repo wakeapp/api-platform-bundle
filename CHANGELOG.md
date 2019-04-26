@@ -1,4 +1,9 @@
-## [Unreleased]
+## [Unreleased major]
+### Added
+- Added api versioning mechanism.
+- Added `wakeapp_api_platform.minimal_api_version` configuration parameter.
+- Added exception code `API_VERSION_MINIMAL_NO_MATCHING = 1101`.
+- Added `ApiAreaGuesserInterface::getApiVersion`.
 ### Changed
 - Added argument resolver instead controller listener.
 ### Removed

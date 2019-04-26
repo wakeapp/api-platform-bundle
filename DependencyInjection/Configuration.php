@@ -8,6 +8,7 @@ use Closure;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
+use Wakeapp\Bundle\ApiPlatformBundle\Dto\ApiResultDto;
 use Wakeapp\Bundle\ApiPlatformBundle\Dto\ApiResultDtoInterface;
 
 class Configuration implements ConfigurationInterface
@@ -22,9 +23,13 @@ class Configuration implements ConfigurationInterface
 
         $root
             ->children()
+                ->integerNode('minimal_api_version')
+                    ->min(1)
+                    ->defaultValue(1)
+                ->end()
                 ->booleanNode('response_debug')->defaultFalse()->end()
                 ->scalarNode('api_result_dto_class')
-                    ->defaultValue('Wakeapp\Bundle\ApiPlatformBundle\Dto\ApiResultDto')
+                    ->defaultValue(ApiResultDto::class)
                     ->cannotBeEmpty()
                     ->validate()->always($this->validationForApiResultDtoClass())->end()
                 ->end()
