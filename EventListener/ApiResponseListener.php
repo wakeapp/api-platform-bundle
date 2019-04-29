@@ -6,6 +6,7 @@ namespace Wakeapp\Bundle\ApiPlatformBundle\EventListener;
 
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
+use Symfony\Component\OptionsResolver\Exception\ExceptionInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Wakeapp\Bundle\ApiPlatformBundle\Dto\ApiDebugExceptionResultDto;
 use Wakeapp\Bundle\ApiPlatformBundle\Dto\ApiResultDto;
@@ -81,6 +82,8 @@ class ApiResponseListener
 
     /**
      * @param GetResponseForExceptionEvent $event
+     *
+     * @throws ExceptionInterface
      */
     public function onKernelException(GetResponseForExceptionEvent $event): void
     {
@@ -117,16 +120,12 @@ class ApiResponseListener
         }
 
         if ($this->debug) {
-            $data = new ApiDebugExceptionResultDto();
-
-            $stackTrace = explode("\n", $exception->getTraceAsString());
-
-            $data->resolve([
+            $data = new ApiDebugExceptionResultDto([
                 'code' => $exception->getCode(),
                 'file' => $exception->getFile(),
                 'line' => $exception->getLine(),
                 'message' => $exception->getMessage(),
-                'stackTrace' => $stackTrace,
+                'stackTrace' => explode("\n", $exception->getTraceAsString()),
             ]);
         }
 

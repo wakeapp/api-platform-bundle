@@ -6,12 +6,12 @@ namespace Wakeapp\Bundle\ApiPlatformBundle\ArgumentResolver;
 
 use Exception;
 use Generator;
-use Linkin\Bundle\SwaggerResolverBundle\Factory\SwaggerResolverFactory;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Controller\ArgumentValueResolverInterface;
 use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata;
 use Symfony\Component\OptionsResolver\Exception\InvalidOptionsException;
 use Wakeapp\Bundle\ApiPlatformBundle\Exception\ApiException;
+use Wakeapp\Bundle\ApiPlatformBundle\Factory\ApiDtoFactory;
 use Wakeapp\Bundle\ApiPlatformBundle\HttpFoundation\ApiRequest;
 use Wakeapp\Component\DtoResolver\Dto\CollectionDtoResolverInterface;
 use function is_subclass_of;
@@ -19,14 +19,14 @@ use function is_subclass_of;
 class ApiCollectionEntryDtoArgumentResolver implements ArgumentValueResolverInterface
 {
     /**
-     * @var SwaggerResolverFactory
+     * @var ApiDtoFactory
      */
     private $factory;
 
     /**
-     * @param SwaggerResolverFactory $factory
+     * @param ApiDtoFactory $factory
      */
-    public function __construct(SwaggerResolverFactory $factory)
+    public function __construct(ApiDtoFactory $factory)
     {
         $this->factory = $factory;
     }
@@ -49,13 +49,8 @@ class ApiCollectionEntryDtoArgumentResolver implements ArgumentValueResolverInte
      */
     public function resolve(Request $request, ArgumentMetadata $argument): Generator
     {
-        $argumentClassName = $argument->getType();
-
         /** @var CollectionDtoResolverInterface $resolvedArgument */
-        $resolvedArgument = new $argumentClassName();
-
-        $resolver = $this->factory->createForDefinition($resolvedArgument->getEntryDtoClassName());
-        $resolvedArgument->injectResolver($resolver);
+        $resolvedArgument = $this->factory->createApiCollectionDto($argument->getType());
 
         foreach ($request->body->all() as $item) {
             try {

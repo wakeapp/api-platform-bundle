@@ -1,13 +1,13 @@
 services:
     Wakeapp\Bundle\ApiPlatformBundle\ArgumentResolver\ApiCollectionEntryDtoArgumentResolver:
         arguments:
-            - '@Linkin\Bundle\SwaggerResolverBundle\Factory\SwaggerResolverFactory'
+            - '@Wakeapp\Bundle\ApiPlatformBundle\Factory\ApiDtoFactory'
         tags:
             - { name: controller.argument_value_resolver, priority: 250 }
 
     Wakeapp\Bundle\ApiPlatformBundle\ArgumentResolver\ApiEntryDtoArgumentResolver:
         arguments:
-            - '@Linkin\Bundle\SwaggerResolverBundle\Factory\SwaggerResolverFactory'
+            - '@Wakeapp\Bundle\ApiPlatformBundle\Factory\ApiDtoFactory'
         tags:
             - { name: controller.argument_value_resolver, priority: 250 }
 
@@ -15,9 +15,9 @@ services:
         class:      Wakeapp\Bundle\ApiPlatformBundle\EventListener\ApiResponseListener
         arguments:
             - '@wakeapp_api_platform.guesser.api_error_code'
-            - '@wakeapp_api_platform.factory.api_dto'
+            - '@Wakeapp\Bundle\ApiPlatformBundle\Factory\ApiDtoFactory'
             - '@Wakeapp\Bundle\ApiPlatformBundle\Logger\ApiPlatformLogger'
-            - '@translator'
+            - '@Symfony\Component\Translation\TranslatorInterface'
         tags:
             - { name: kernel.event_listener, event: kernel.exception, priority: 1 }
             - { name: kernel.event_listener, event: kernel.response }

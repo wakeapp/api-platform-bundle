@@ -6,6 +6,7 @@
 - Added `ApiAreaGuesserInterface::getApiVersion`.
 ### Changed
 - Added argument resolver instead controller listener.
+- Updated `wakeapp/dto-resolver` to the `^1.0` pattern version.
 ### Removed
 - Removed `ApiControllerArgumentListener`.
 ### Fixed

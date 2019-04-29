@@ -6,12 +6,12 @@ namespace Wakeapp\Bundle\ApiPlatformBundle\ArgumentResolver;
 
 use Exception;
 use Generator;
-use Linkin\Bundle\SwaggerResolverBundle\Factory\SwaggerResolverFactory;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Controller\ArgumentValueResolverInterface;
 use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata;
 use Symfony\Component\OptionsResolver\Exception\InvalidOptionsException;
 use Wakeapp\Bundle\ApiPlatformBundle\Exception\ApiException;
+use Wakeapp\Bundle\ApiPlatformBundle\Factory\ApiDtoFactory;
 use Wakeapp\Bundle\ApiPlatformBundle\HttpFoundation\ApiRequest;
 use Wakeapp\Component\DtoResolver\Dto\DtoResolverInterface;
 use function is_subclass_of;
@@ -19,14 +19,14 @@ use function is_subclass_of;
 class ApiEntryDtoArgumentResolver implements ArgumentValueResolverInterface
 {
     /**
-     * @var SwaggerResolverFactory
+     * @var ApiDtoFactory
      */
     private $factory;
 
     /**
-     * @param SwaggerResolverFactory $factory
+     * @param ApiDtoFactory $factory
      */
-    public function __construct(SwaggerResolverFactory $factory)
+    public function __construct(ApiDtoFactory $factory)
     {
         $this->factory = $factory;
     }
@@ -47,15 +47,8 @@ class ApiEntryDtoArgumentResolver implements ArgumentValueResolverInterface
      */
     public function resolve(Request $request, ArgumentMetadata $argument): Generator
     {
-        $argumentClassName = $argument->getType();
-        $resolver = $this->factory->createForDefinition($argumentClassName);
-
-        /** @var DtoResolverInterface $resolvedArgument */
-        $resolvedArgument = new $argumentClassName();
-        $resolvedArgument->injectResolver($resolver);
-
         try {
-            $resolvedArgument->resolve($request->body->all());
+            $resolvedArgument = $this->factory->createApiDto($argument->getType(), $request->body->all());
         } catch (Exception|InvalidOptionsException $e) {
             throw new ApiException(ApiException::HTTP_BAD_REQUEST_DATA, $e->getMessage());
         }
