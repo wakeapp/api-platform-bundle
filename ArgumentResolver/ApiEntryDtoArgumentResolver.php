@@ -48,7 +48,7 @@ class ApiEntryDtoArgumentResolver implements ArgumentValueResolverInterface
     public function resolve(Request $request, ArgumentMetadata $argument): Generator
     {
         try {
-            $resolvedArgument = $this->factory->createApiDto($argument->getType(), $request->body->all());
+            $resolvedArgument = $this->factory->createApiDtoByRequest($argument->getType(), $request);
         } catch (Exception|InvalidOptionsException $e) {
             throw new ApiException(ApiException::HTTP_BAD_REQUEST_DATA, $e->getMessage());
         }

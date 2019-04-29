@@ -6,8 +6,10 @@ namespace Wakeapp\Bundle\ApiPlatformBundle\Factory;
 
 use Linkin\Bundle\SwaggerResolverBundle\Factory\SwaggerResolverFactory;
 use Wakeapp\Bundle\ApiPlatformBundle\Exception\ApiException;
+use Wakeapp\Bundle\ApiPlatformBundle\HttpFoundation\ApiRequest;
 use Wakeapp\Component\DtoResolver\Dto\CollectionDtoResolverInterface;
 use Wakeapp\Component\DtoResolver\Dto\DtoResolverInterface;
+use function is_subclass_of;
 
 class ApiDtoFactory
 {
@@ -56,5 +58,68 @@ class ApiDtoFactory
         $resolver = $this->factory->createForDefinition($className);
 
         return new $className($data, $resolver);
+    }
+
+    /**
+     * @param string $className
+     * @param ApiRequest $request
+     * @param bool $withHeaders
+     * @param bool $withFiles
+     *
+     * @return DtoResolverInterface
+     */
+    public function createApiDtoByRequest(
+        string $className,
+        ApiRequest $request,
+        bool $withHeaders = false,
+        bool $withFiles = false
+    ): DtoResolverInterface {
+        if (!is_subclass_of($className, DtoResolverInterface::class)) {
+            throw new ApiException(ApiException::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
+        $resolver = $this->factory->createForRequest($request);
+        $data = $this->getDataForRequest($request, $withHeaders, $withFiles);
+
+        return new $className($data, $resolver);
+    }
+
+    /**
+     * @param ApiRequest $request
+     * @param bool $withHeaders
+     * @param bool $withFiles
+     *
+     * @return array
+     */
+    private function getDataForRequest(ApiRequest $request, bool $withHeaders, bool $withFiles): array
+    {
+        $data = $this->getRequestDataByMethod($request);
+
+        if ($withHeaders) {
+            $data += $request->headers->all();
+        }
+
+        if ($withFiles) {
+            $data += $request->files->all();
+        }
+
+        return $data;
+    }
+
+    /**
+     * @param ApiRequest $request
+     *
+     * @return array
+     */
+    private function getRequestDataByMethod(ApiRequest $request): array
+    {
+        $requestMethod = $request->getMethod();
+        $data = $request->attributes->all();
+
+        if ($requestMethod === ApiRequest::METHOD_GET || $requestMethod === ApiRequest::METHOD_DELETE) {
+            return $data + $request->query->all();
+        }
+
+        return $data + $request->body->all();
     }
 }

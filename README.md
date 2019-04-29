@@ -36,7 +36,7 @@ Api Platform Bundle
 После включите бандл добавив его в список зарегистрированных бандлов в `app/AppKernel.php` файл вашего проекта:
 
 ```php
-<?php
+<?php declare(strict_types=1);
 // app/AppKernel.php
 
 class AppKernel extends Kernel
@@ -213,19 +213,15 @@ class ProfileResultDto implements DtoResolverInterface
 [NelmioApiDocBundle](https://github.com/nelmio/NelmioApiDocBundle).
 
 ```php
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Dto;
+use App\Dto\ProfileResultDto;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Swagger\Annotations as SWG;
 use Symfony\Component\Routing\Annotation\Route;
-use Wakeapp\Bundle\ApiPlatformBundle\Exception\ApiException;
 use Wakeapp\Bundle\ApiPlatformBundle\Factory\ApiDtoFactory;
-use Wakeapp\Bundle\ApiPlatformBundle\HttpFoundation\ApiRequest;
 use Wakeapp\Bundle\ApiPlatformBundle\HttpFoundation\ApiResponse;
 
 /**
@@ -238,26 +234,18 @@ class ProfileController
      *
      * @Route(methods={"GET"})
      *
-     * @SWG\Parameter(name="username", in="query", type="string", required=true, description="User login")
      * @SWG\Response(
      *      response=ApiResponse::HTTP_OK,
      *      description="Successful result in 'data' offset",
      *      @Model(type=ProfileResultDto::class)
      * )
      *
-     * @param ApiRequest $apiRequest
      * @param ApiDtoFactory $factory
      *
      * @return ApiResponse
      */
-    public function getProfile(ApiRequest $apiRequest, ApiDtoFactory $factory): ApiResponse
+    public function getProfile(ApiDtoFactory $factory): ApiResponse
     {
-        $username = $apiRequest->query->get('username');
-
-        if (!$username) {
-            throw new ApiException(ApiException::HTTP_BAD_REQUEST_DATA);
-        }
-
         // обработка данных
 
         $resultDto = $factory->createApiDto(ProfileResultDto::class, [
@@ -274,6 +262,106 @@ class ProfileController
 Дополнительно
 -------------
 
+### Как комбинировать body параметры с query и/или path 
+
+Объект на DTO:
+
+```php
+<?php declare(strict_types=1);
+
+namespace App\Dto;
+
+use Swagger\Annotations as SWG;
+use Wakeapp\Bundle\ApiPlatformBundle\Dto\MagicAwareDtoResolverTrait;
+use Wakeapp\Component\DtoResolver\Dto\DtoResolverInterface;
+
+/**
+ * @SWG\Definition(
+ *      type="object",
+ *      description="Update profile info",
+ *      required={"firstName", "lastName"},
+ * )
+ * 
+ * @method getEmail(): string
+ */
+class UpdateProfileEntryDto implements DtoResolverInterface
+{
+    use MagicAwareDtoResolverTrait;
+    
+    /**
+     * @var string
+     */
+    protected $email;
+
+    /**
+     * @var string
+     *
+     * @SWG\Property(description="User's first name", example="John")
+     */
+    protected $firstName;
+
+    /**
+     * @var string
+     *
+     * @SWG\Property(description="User's last name", example="Doe")
+     */
+    protected $lastName;
+
+    /**
+     * @return string
+     */
+    public function getFirstName(): string
+    {
+        return $this->firstName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLastName(): string
+    {
+        return $this->lastName;
+    }
+}
+```
+
+Контроллер:
+
+```php
+<?php declare(strict_types=1);
+
+namespace App\Controller;
+
+use App\Dto\UpdateProfileEntryDto;
+use Nelmio\ApiDocBundle\Annotation\Model;
+use Swagger\Annotations as SWG;
+use Symfony\Component\Routing\Annotation\Route;
+use Wakeapp\Bundle\ApiPlatformBundle\HttpFoundation\ApiResponse;
+
+/**
+ * @Route("/api/profile")
+ */
+class ProfileController
+{
+    /**
+     * Update user password
+     *
+     * @Route("/{email}", methods={"PATCH"})
+     *
+     * @SWG\Parameter(name="email", in="path", type="string", required=true, description="User email")
+     * @SWG\Parameter(name="body", in="body", @Model(type=UpdateProfileEntryDto::class), required=true)
+     *
+     * @param UpdateProfileEntryDto $entryDto
+     *
+     * @return ApiResponse
+     */
+    public function getProfile(UpdateProfileEntryDto $entryDto): ApiResponse
+    {
+        return new ApiResponse($entryDto);
+    }
+}
+```
+
 ### Как описать в формат обертки ответа в аннотациях
 
 Чтобы описать формат обертки ответа `Wakeapp\Bundle\ApiPlatformBundle\Dto\ApiResultDto` при помощи аннотаций
@@ -282,9 +370,7 @@ class ProfileController
 **Шаг 1** Создайте собственный ответ сервера:
 
 ```php
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace App\Dto;
 
@@ -336,9 +422,13 @@ wakeapp_api_platform:
 **Шаг 3** Добавьте описание к вашему методу:
 
 ```php
-<?php
+<?php declare(strict_types=1);
 
-// ...
+use Nelmio\ApiDocBundle\Annotation\Model;
+use Swagger\Annotations as SWG;
+use Wakeapp\Bundle\ApiPlatformBundle\HttpFoundation\ApiRequest;
+use Wakeapp\Bundle\ApiPlatformBundle\HttpFoundation\ApiResponse;
+use Wakeapp\Bundle\ApiPlatformBundle\Factory\ApiDtoFactory;
 
 class ProfileController
 {
@@ -353,11 +443,14 @@ class ProfileController
      * )
      * @SWG\Response(response="default", @Model(type=ApiResultDto::class), description="Response wrapper")
      *
-     * ... 
+     * @param ApiRequest $apiRequest
+     * @param ApiDtoFactory $factory
+     * 
+     * @return ApiResponse
      */
     public function getProfile(ApiRequest $apiRequest, ApiDtoFactory $factory): ApiResponse
     {
-        // ...
+        return new ApiResponse();
     }
 }
 ```
