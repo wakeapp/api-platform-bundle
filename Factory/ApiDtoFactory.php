@@ -35,13 +35,10 @@ class ApiDtoFactory
             throw new ApiException(ApiException::HTTP_INTERNAL_SERVER_ERROR);
         }
 
-        /** @var CollectionDtoResolverInterface $collectionDto */
-        $collectionDto = new $className();
-        $resolver = $this->factory->createForDefinition($collectionDto->getEntryDtoClassName());
+        /** @var CollectionDtoResolverInterface $className */
+        $resolver = $this->factory->createForDefinition($className::getItemDtoClassName());
 
-        $collectionDto->injectResolver($resolver);
-
-        return $collectionDto;
+        return new $className($resolver);
     }
 
     /**
@@ -56,13 +53,8 @@ class ApiDtoFactory
             throw new ApiException(ApiException::HTTP_INTERNAL_SERVER_ERROR);
         }
 
-        /** @var DtoResolverInterface $resultDto */
-        $resultDto = new $className();
         $resolver = $this->factory->createForDefinition($className);
 
-        $resultDto->injectResolver($resolver);
-        $resultDto->resolve($data);
-
-        return $resultDto;
+        return new $className($data, $resolver);
     }
 }

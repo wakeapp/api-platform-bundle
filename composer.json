@@ -5,21 +5,14 @@
     "keywords":    ["symfony-bundle", "rest", "api", "http-foundation"],
     "license":     "proprietary",
 
-    "repositories" : [
-        {
-            "type" : "vcs",
-            "url" : "git@bitbucket.org:wakecent/dto-resolver.git"
-        }
-    ],
-
     "require": {
         "php":                                  "~7.1",
         "adrenalinkin/swagger-resolver-bundle": "^0.4.0",
-        "symfony/config":                       "~2.8||~3.0||~4.0",
-        "symfony/dependency-injection":         "~2.8||~3.0||~4.0",
-        "symfony/http-foundation":              "~2.8||~3.0||~4.0",
-        "symfony/http-kernel":                  "~2.8||~3.0||~4.0",
-        "wakeapp/dto-resolver":                 "^0.4.0"
+        "symfony/config":                       "~3.4||~4.0",
+        "symfony/dependency-injection":         "~3.4||~4.0",
+        "symfony/http-foundation":              "~3.4||~4.0",
+        "symfony/http-kernel":                  "~3.4||~4.0",
+        "wakeapp/dto-resolver":                 "^1.0"
     },
 
     "suggest": {
