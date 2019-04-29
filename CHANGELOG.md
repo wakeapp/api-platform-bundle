@@ -4,6 +4,8 @@
 - Added `wakeapp_api_platform.minimal_api_version` configuration parameter.
 - Added exception code `API_VERSION_MINIMAL_NO_MATCHING = 1101`.
 - Added `ApiAreaGuesserInterface::getApiVersion`.
+- Added resolving entry DTO's by full request.
+- Added `ApiDtoFactory::createApiDtoByRequest`.
 ### Changed
 - Added argument resolver instead controller listener.
 - Updated `wakeapp/dto-resolver` to the `^1.0` pattern version.
