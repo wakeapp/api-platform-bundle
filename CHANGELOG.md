@@ -1,4 +1,4 @@
-## [Unreleased major]
+## [2.0.0] - 2019-04-29
 ### Added
 - Added api versioning mechanism.
 - Added `wakeapp_api_platform.minimal_api_version` configuration parameter.
