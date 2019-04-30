@@ -4,49 +4,30 @@ declare(strict_types=1);
 
 namespace Wakeapp\Bundle\ApiPlatformBundle\Logger;
 
-use Psr\Log\LoggerAwareTrait;
+use Psr\Log\AbstractLogger;
+use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
 
-class ApiPlatformLogger
+class ApiPlatformLogger extends AbstractLogger
 {
-    use LoggerAwareTrait;
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
 
     /**
-     * {@inheritdoc}
+     * @param LoggerInterface|null $logger
      */
-    public function notice(string $message, array $params = [])
+    public function __construct(?LoggerInterface $logger = null)
     {
-        if (null !== $this->logger) {
-            $this->logger->notice($message, $params);
-        }
+        $this->logger = $logger ?? new NullLogger();
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
-    public function debug(string $message, array $params = [])
+    public function log($level, $message, array $context = [])
     {
-        if (null !== $this->logger) {
-            $this->logger->debug($message, $params);
-        }
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function error(string $message, array $params = [])
-    {
-        if (null !== $this->logger) {
-            $this->logger->error($message, $params);
-        }
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function critical(string $message, array $params = [])
-    {
-        if (null !== $this->logger) {
-            $this->logger->critical($message, $params);
-        }
+        $this->logger->log($level, $message, $context);
     }
 }

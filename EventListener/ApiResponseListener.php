@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Wakeapp\Bundle\ApiPlatformBundle\EventListener;
 
+use Psr\Log\LoggerAwareInterface;
+use Psr\Log\LoggerAwareTrait;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
 use Symfony\Component\OptionsResolver\Exception\ExceptionInterface;
@@ -15,12 +17,13 @@ use Wakeapp\Bundle\ApiPlatformBundle\Factory\ApiDtoFactory;
 use Wakeapp\Bundle\ApiPlatformBundle\Guesser\ApiErrorCodeGuesserInterface;
 use Wakeapp\Bundle\ApiPlatformBundle\HttpFoundation\ApiRequest;
 use Wakeapp\Bundle\ApiPlatformBundle\HttpFoundation\ApiResponse;
-use Wakeapp\Bundle\ApiPlatformBundle\Logger\ApiPlatformLogger;
 use function explode;
 use function sprintf;
 
-class ApiResponseListener
+class ApiResponseListener implements LoggerAwareInterface
 {
+    use LoggerAwareTrait;
+
     /**
      * @var string
      */
@@ -52,29 +55,21 @@ class ApiResponseListener
     private $guesser;
 
     /**
-     * @var ApiPlatformLogger
-     */
-    private $logger;
-
-    /**
      * @param ApiErrorCodeGuesserInterface $guesser
      * @param ApiDtoFactory $dtoFactory
      * @param TranslatorInterface|null $translator
      * @param string $apiResultDtoClass
      * @param bool $debug
-     * @param ApiPlatformLogger $logger
      */
     public function __construct(
         ApiErrorCodeGuesserInterface $guesser,
         ApiDtoFactory $dtoFactory,
-        ApiPlatformLogger $logger,
         ?TranslatorInterface $translator = null,
         string $apiResultDtoClass = ApiResultDto::class,
         bool $debug = false
     ) {
         $this->guesser = $guesser;
         $this->apiResultDtoClass = $apiResultDtoClass;
-        $this->logger = $logger;
         $this->debug = $debug;
         $this->dtoFactory = $dtoFactory;
         $this->translator = $translator;

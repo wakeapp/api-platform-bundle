@@ -26,9 +26,5 @@ class ApiResponseListenerCompiler implements CompilerPassInterface
             ->addArgument($apiResultDtoClass)
             ->addArgument($requestDebug)
         ;
-
-        if (!$container->has('translator')) {
-            $listenerDefinition->replaceArgument(1, null);
-        }
     }
 }
