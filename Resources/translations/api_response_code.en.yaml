@@ -1,40 +1,11 @@
 0:      Successfully
 
-# Database Errors 1 - 9
-1:      Unexpected database error
-
-# Application Package Name Errors 1x
-10:     Application package name not found
-11:     Application package name can not be empty
-
-# UDID Errors 2x
-20:     UDID not found
-21:     UDID can not be empty
-22:     UDID from the path and from the token are different
-
 400:    Received incorrect request data
 401:    Unauthorized
 403:    Access denied
 404:    Route not found
 405:    HTTP method not allowed
-500:    Unexpected server error
-
-# Client Version Errors 6xx
-600:    Client version not found
-601:    Received empty client version
-602:    Client version need update
-603:    Invalid client version format
-
-# Sign Errors 7xx
-700:    Sign invalid
-
-# Token Errors 8xx
-800:    Failed to encode token
-801:    Authentication token not found
-802:    Authentication token invalid
-
-# Receipt Errors 9xx
-900:    Unexpected receipt error
-
-# Api version Errors 11xx
-1101:   The minimum version of api does not match the stated
+409:    Conflict, data already changed by other request
+410:    Resource no longer available
+412:    Headers contains invalid data or do not contains required
+503:    Server temporarily unavailable, try later

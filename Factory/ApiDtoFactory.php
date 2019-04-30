@@ -5,11 +5,12 @@ declare(strict_types=1);
 namespace Wakeapp\Bundle\ApiPlatformBundle\Factory;
 
 use Linkin\Bundle\SwaggerResolverBundle\Factory\SwaggerResolverFactory;
-use Wakeapp\Bundle\ApiPlatformBundle\Exception\ApiException;
+use RuntimeException;
 use Wakeapp\Bundle\ApiPlatformBundle\HttpFoundation\ApiRequest;
 use Wakeapp\Component\DtoResolver\Dto\CollectionDtoResolverInterface;
 use Wakeapp\Component\DtoResolver\Dto\DtoResolverInterface;
 use function is_subclass_of;
+use function sprintf;
 
 class ApiDtoFactory
 {
@@ -34,7 +35,10 @@ class ApiDtoFactory
     public function createApiCollectionDto(string $className): CollectionDtoResolverInterface
     {
         if (!is_subclass_of($className, CollectionDtoResolverInterface::class)) {
-            throw new ApiException(ApiException::HTTP_INTERNAL_SERVER_ERROR);
+            throw new RuntimeException(sprintf(
+                'Received class should implement "%s"',
+                CollectionDtoResolverInterface::class
+            ));
         }
 
         /** @var CollectionDtoResolverInterface $className */
@@ -52,7 +56,10 @@ class ApiDtoFactory
     public function createApiDto(string $className, array $data): DtoResolverInterface
     {
         if (!is_subclass_of($className, DtoResolverInterface::class)) {
-            throw new ApiException(ApiException::HTTP_INTERNAL_SERVER_ERROR);
+            throw new RuntimeException(sprintf(
+                'Received class should implement "%s"',
+                DtoResolverInterface::class
+            ));
         }
 
         $resolver = $this->factory->createForDefinition($className);
@@ -75,7 +82,10 @@ class ApiDtoFactory
         bool $withFiles = false
     ): DtoResolverInterface {
         if (!is_subclass_of($className, DtoResolverInterface::class)) {
-            throw new ApiException(ApiException::HTTP_INTERNAL_SERVER_ERROR);
+            throw new RuntimeException(sprintf(
+                'Received class should implement "%s"',
+                DtoResolverInterface::class
+            ));
         }
 
         $resolver = $this->factory->createForRequest($request);

@@ -39,7 +39,7 @@ class MinimalApiVersionRequestListener
         }
 
         if ($request->getApiVersion() < $this->minimalApiVersion) {
-            throw new ApiException(ApiException::API_VERSION_MINIMAL_NO_MATCHING);
+            throw new ApiException(ApiException::HTTP_GONE, 'Minimal api version is: ' . $this->minimalApiVersion);
         }
     }
 }
