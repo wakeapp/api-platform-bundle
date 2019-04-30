@@ -1,6 +1,9 @@
 Api Platform Bundle
 ===================
 
+[![Latest Stable Version](https://poser.pugx.org/wakeapp/api-platform-bundle/v/stable)](https://packagist.org/packages/wakeapp/api-platform-bundle)
+[![Total Downloads](https://poser.pugx.org/wakeapp/api-platform-bundle/downloads)](https://packagist.org/packages/wakeapp/api-platform-bundle)
+
 Введение
 --------
 
