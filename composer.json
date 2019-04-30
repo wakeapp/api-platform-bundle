@@ -2,8 +2,8 @@
     "name":        "wakeapp/api-platform-bundle",
     "description": "Extends Symfony HttpFoundation and provides encapsulated area for work with REST API",
     "type":        "symfony-bundle",
-    "keywords":    ["symfony-bundle", "rest", "api", "http-foundation"],
-    "license":     "proprietary",
+    "keywords":    ["symfony-bundle", "api-platform", "rest", "api", "http-foundation"],
+    "license":     "MIT",
 
     "require": {
         "php":                                  "~7.1",
