@@ -10,6 +10,8 @@ use Symfony\Component\DependencyInjection\Exception\InvalidArgumentException;
 use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
 use Wakeapp\Bundle\ApiPlatformBundle\Guesser\ApiAreaGuesserInterface;
 use Wakeapp\Bundle\ApiPlatformBundle\HttpFoundation\ApiKernel;
+use function is_subclass_of;
+use function sprintf;
 
 class ApiKernelCompiler implements CompilerPassInterface
 {

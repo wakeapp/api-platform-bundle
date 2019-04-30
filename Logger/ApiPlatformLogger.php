@@ -29,7 +29,7 @@ class ApiPlatformLogger
             $this->logger->debug($message, $params);
         }
     }
-    
+
     /**
      * {@inheritdoc}
      */

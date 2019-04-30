@@ -1,6 +1,8 @@
 ### Composer template
 auth.json
 composer.phar
+composer.lock
+/vendor
 
 ### IDE settings
 /.settings

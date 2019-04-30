@@ -10,6 +10,8 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Wakeapp\Bundle\ApiPlatformBundle\Dto\ApiResultDto;
 use Wakeapp\Bundle\ApiPlatformBundle\Dto\ApiResultDtoInterface;
+use function is_subclass_of;
+use function sprintf;
 
 class Configuration implements ConfigurationInterface
 {

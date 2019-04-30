@@ -12,6 +12,8 @@ use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
 use Wakeapp\Bundle\ApiPlatformBundle\EventListener\ApiResponseListener;
 use Wakeapp\Bundle\ApiPlatformBundle\Guesser\ApiErrorCodeGuesser;
 use Wakeapp\Bundle\ApiPlatformBundle\Guesser\ApiErrorCodeGuesserInterface;
+use function is_subclass_of;
+use function sprintf;
 
 class ApiErrorCodeGuesserCompiler implements CompilerPassInterface
 {

@@ -7,6 +7,7 @@
 
     "require": {
         "php":                                  "~7.1",
+        "ext-json":                             "*",
         "adrenalinkin/swagger-resolver-bundle": "^0.4.0",
         "symfony/config":                       "~3.4||~4.0",
         "symfony/dependency-injection":         "~3.4||~4.0",
@@ -15,8 +16,13 @@
         "wakeapp/dto-resolver":                 "^1.0"
     },
 
+    "conflict": {
+        "nelmio/api-doc-bundle": "<3.0"
+    },
+
     "suggest": {
-        "symfony/translation": "Provides possibility for translate response codes"
+        "symfony/monolog-bundle":   "Provides possibility for log information into separate channel",
+        "symfony/translation":      "Provides possibility for translate response codes"
     },
 
     "autoload": {
