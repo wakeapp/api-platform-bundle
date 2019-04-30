@@ -92,7 +92,6 @@ class ApiResponseListener
         }
 
         $exception = $event->getException();
-
         $errorCode = $this->guesser->guessErrorCode($exception);
 
         if (!$errorCode) {
@@ -100,7 +99,7 @@ class ApiResponseListener
         }
 
         if (!$errorCode) {
-            $errorCode = ApiException::HTTP_INTERNAL_SERVER_ERROR;
+            $errorCode = ApiResponse::HTTP_INTERNAL_SERVER_ERROR;
         }
 
         if ($errorCode >= 400 && $errorCode < 600) {

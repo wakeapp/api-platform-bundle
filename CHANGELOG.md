@@ -2,15 +2,17 @@
 ### Added
 - Added api versioning mechanism.
 - Added `wakeapp_api_platform.minimal_api_version` configuration parameter.
-- Added exception code `API_VERSION_MINIMAL_NO_MATCHING = 1101`.
 - Added `ApiAreaGuesserInterface::getApiVersion`.
 - Added resolving entry DTO's by full request.
 - Added `ApiDtoFactory::createApiDtoByRequest`.
+- Added popular HTTP codes: `409` `410` `412` `503`.
 ### Changed
 - Added argument resolver instead controller listener.
 - Updated `wakeapp/dto-resolver` to the `^1.0` pattern version.
 ### Removed
 - Removed `ApiControllerArgumentListener`.
+- Removed `ApiException::HTTP_INTERNAL_SERVER_ERROR`.
+- Removed all non-HTTP error codes.
 ### Fixed
 - Return `ApiResponse` instead of `JsonResponse` in the `ApiResponseListener`.
 
