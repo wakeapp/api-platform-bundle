@@ -40,10 +40,6 @@ class ApiControllerArgumentListener
         }
 
         foreach ($event->getArguments() as $argument) {
-            if (!$argument instanceof DtoResolverInterface) {
-                continue;
-            }
-
             if ($argument instanceof CollectionDtoResolverInterface) {
                 $resolver = $this->factory->createForDefinition($argument->getEntryDtoClassName());
                 $argument->injectResolver($resolver);
@@ -56,6 +52,10 @@ class ApiControllerArgumentListener
                     }
                 }
 
+                continue;
+            }
+
+            if (!$argument instanceof DtoResolverInterface) {
                 continue;
             }
 

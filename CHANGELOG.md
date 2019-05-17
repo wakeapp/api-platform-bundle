@@ -1,3 +1,7 @@
+## [1.0.6] - 2019-05-17
+### Fixed
+- Fixed problem with incorrect  collection resolving.
+
 ## [1.0.5] - 2019-04-11
 ### Changed
 - Downgraded `DtoResolverInterface` to `JsonSerializable` in the `ApiResponse`.
