@@ -1,3 +1,11 @@
+## [2.0.1] - 2019-07-25
+## Added
+- Added `symfony/translation-contracts`.
+## Fixed
+- There was a dependency on `symfony/translations-contracts`, but this bundle was not in the required section.
+### Changed
+- Var name in `ApiResponseListenerCompiler::process` from `requestDebug` to `responseDebug`.
+
 ## [2.0.0] - 2019-04-29
 ### Added
 - Added api versioning mechanism.

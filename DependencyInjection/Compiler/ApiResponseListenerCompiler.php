@@ -24,7 +24,7 @@ class ApiResponseListenerCompiler implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container): void
     {
-        $requestDebug = $container->getParameter('wakeapp_api_platform.response_debug');
+        $responseDebug = $container->getParameter('wakeapp_api_platform.response_debug');
         $container->getParameterBag()->remove('wakeapp_api_platform.response_debug');
 
         $apiResultDtoClass = $container->getParameter('wakeapp_api_platform.api_result_dto_class');
@@ -33,7 +33,7 @@ class ApiResponseListenerCompiler implements CompilerPassInterface
         $listenerDefinition = $container->getDefinition(ApiResponseListener::class);
         $listenerDefinition
             ->addArgument($apiResultDtoClass)
-            ->addArgument($requestDebug)
+            ->addArgument($responseDebug)
         ;
     }
 }
