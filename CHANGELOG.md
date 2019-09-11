@@ -1,3 +1,7 @@
+## [2.0.2] - 2019-09-11
+### Changed
+- Updated `adrenalinkin/swagger-resolver-bundle` to the `^0.4.2` pattern version.
+
 ## [2.0.1] - 2019-07-25
 ## Added
 - Added `symfony/translation-contracts`.
