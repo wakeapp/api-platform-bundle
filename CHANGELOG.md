@@ -1,6 +1,8 @@
 ## [2.0.3] - 2019-09-23
 ### Added
 - Installed `wakeapp/swagger-resolver-bundle` to the `^0.4.3` pattern version.
+### Fixed
+- Fixed route paths with multiple methods.
 ### Removed
 - Removed `adrenalinkin/swagger-resolver-bundle`.
 
