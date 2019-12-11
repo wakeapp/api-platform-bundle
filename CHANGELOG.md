@@ -1,3 +1,7 @@
+## [2.0.4] - 2019-12-11
+### Changed
+- Updated `wakeapp/swagger-resolver-bundle` to the `^0.4.5` pattern version.
+
 ## [2.0.3] - 2019-09-23
 ### Added
 - Installed `wakeapp/swagger-resolver-bundle` to the `^0.4.3` pattern version.
