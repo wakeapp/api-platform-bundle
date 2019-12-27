@@ -1,3 +1,7 @@
+## [2.0.5] - 2019-12-27
+### Fixed
+- Fixed deprecations for Symfony
+
 ## [2.0.4] - 2019-12-11
 ### Changed
 - Updated `wakeapp/swagger-resolver-bundle` to the `^0.4.5` pattern version.
