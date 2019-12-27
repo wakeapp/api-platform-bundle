@@ -15,8 +15,8 @@ namespace Wakeapp\Bundle\ApiPlatformBundle\EventListener;
 
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
-use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
-use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
+use Symfony\Component\HttpKernel\Event\ResponseEvent;
+use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\OptionsResolver\Exception\ExceptionInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Wakeapp\Bundle\ApiPlatformBundle\Dto\ApiDebugExceptionResultDto;
@@ -85,17 +85,17 @@ class ApiResponseListener implements LoggerAwareInterface
     }
 
     /**
-     * @param GetResponseForExceptionEvent $event
+     * @param ExceptionEvent $event
      *
      * @throws ExceptionInterface
      */
-    public function onKernelException(GetResponseForExceptionEvent $event): void
+    public function onKernelException(ExceptionEvent $event): void
     {
         if (!$event->getRequest() instanceof ApiRequest) {
             return;
         }
 
-        $exception = $event->getException();
+        $exception = $event->getThrowable();
         $errorCode = $this->guesser->guessErrorCode($exception);
 
         if (!$errorCode) {
@@ -153,9 +153,9 @@ class ApiResponseListener implements LoggerAwareInterface
     }
 
     /**
-     * @param FilterResponseEvent $event
+     * @param ResponseEvent $event
      */
-    public function onKernelResponse(FilterResponseEvent $event): void
+    public function onKernelResponse(ResponseEvent $event): void
     {
         $response = $event->getResponse();
 
