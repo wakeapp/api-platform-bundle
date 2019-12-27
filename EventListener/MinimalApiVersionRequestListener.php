@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Wakeapp\Bundle\ApiPlatformBundle\EventListener;
 
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Wakeapp\Bundle\ApiPlatformBundle\Exception\ApiException;
 use Wakeapp\Bundle\ApiPlatformBundle\HttpFoundation\ApiRequest;
 
@@ -33,9 +33,9 @@ class MinimalApiVersionRequestListener
     }
 
     /**
-     * @param GetResponseEvent $event
+     * @param RequestEvent $event
      */
-    public function onKernelRequest(GetResponseEvent $event): void
+    public function onKernelRequest(RequestEvent $event): void
     {
         if (!$event->isMasterRequest()) {
             return;

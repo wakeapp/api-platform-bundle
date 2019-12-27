@@ -29,10 +29,16 @@ class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder(): TreeBuilder
     {
-        $treeBuilder = new TreeBuilder();
-        $root = $treeBuilder->root('wakeapp_api_platform');
+        $treeBuilder = new TreeBuilder('wakeapp_api_platform');
 
-        $root
+        if (method_exists($treeBuilder, 'getRootNode')) {
+            $rootNode = $treeBuilder->getRootNode();
+        } else {
+            // BC layer for symfony/config 4.1 and older
+            $rootNode = $treeBuilder->root('wakeapp_enumer');
+        }
+
+        $rootNode
             ->children()
                 ->integerNode('minimal_api_version')
                     ->min(1)
