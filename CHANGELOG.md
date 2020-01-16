@@ -1,3 +1,7 @@
+## [2.0.7] - 2020-01-16
+### Added
+- `ApiErrorCodeGuesserInterface::class` now is alias for `wakeapp_api_platform.error_code_guesser_service`.
+
 ## [2.0.6] - 2019-12-30
 ### Changed
 - Updated `wakeapp/swagger-resolver-bundle` to the `^0.4.6` pattern version.

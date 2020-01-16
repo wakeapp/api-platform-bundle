@@ -53,6 +53,8 @@ class ApiErrorCodeGuesserCompiler implements CompilerPassInterface
             ));
         }
 
+        $container->setAlias(ApiErrorCodeGuesserInterface::class, $guesserDefinition->getClass());
+
         $container
             ->getDefinition(ApiResponseListener::class)
             ->replaceArgument(0, $guesserDefinition)
