@@ -1,7 +1,6 @@
 ## [2.0.7] - 2020-01-16
-### Changed
-- Now `wakeapp_api_platform.error_code_guesser_service` configuration parameter is not removed from container in
-`ApiErrorCodeGuesserCompiler`.
+### Added
+- `ApiErrorCodeGuesserInterface::class` now is alias for `wakeapp_api_platform.error_code_guesser_service`.
 
 ## [2.0.6] - 2019-12-30
 ### Changed
