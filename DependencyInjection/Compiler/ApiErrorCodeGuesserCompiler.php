@@ -32,7 +32,6 @@ class ApiErrorCodeGuesserCompiler implements CompilerPassInterface
     public function process(ContainerBuilder $container): void
     {
         $guesserId = $container->getParameter('wakeapp_api_platform.error_code_guesser_service');
-        $container->getParameterBag()->remove('wakeapp_api_platform.error_code_guesser_service');
 
         if (empty($guesserId)) {
             $guesserId = ApiErrorCodeGuesser::class;
