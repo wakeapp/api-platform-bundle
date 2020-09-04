@@ -1,3 +1,7 @@
+## [2.0.9] - 2020-09-04
+## Patch
+- Updated `wakeapp/swagger-resolver-bundle` to the `^0.4.8`.
+
 ## [2.0.8] - 2020-09-04
 ## Patch
 - Added Symfony 5 support.
