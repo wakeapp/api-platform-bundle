@@ -1,3 +1,9 @@
+## [2.0.8] - 2020-09-04
+## Patch
+- Added Symfony 5 support.
+- Updated `wakeapp/swagger-resolver-bundle` to the `^0.4.7`.
+- Updated `wakeapp/dto-resolver` to the `^1.1`
+
 ## [2.0.7] - 2020-01-16
 ### Added
 - `ApiErrorCodeGuesserInterface::class` now is alias for `wakeapp_api_platform.error_code_guesser_service`.
