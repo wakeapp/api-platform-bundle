@@ -1,9 +1,13 @@
+## [2.0.10] - 2020-09-10
+### Changed
+- Accept request parameters in `ApiDtoFactory::getRequestDataByMethod()`
+
 ## [2.0.9] - 2020-09-04
-## Patch
+### Patch
 - Updated `wakeapp/swagger-resolver-bundle` to the `^0.4.8`.
 
 ## [2.0.8] - 2020-09-04
-## Patch
+### Patch
 - Added Symfony 5 support.
 - Updated `wakeapp/swagger-resolver-bundle` to the `^0.4.7`.
 - Updated `wakeapp/dto-resolver` to the `^1.1`
