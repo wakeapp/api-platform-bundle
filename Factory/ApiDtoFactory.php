@@ -139,6 +139,6 @@ class ApiDtoFactory
             return $data + $request->query->all();
         }
 
-        return $data + $request->body->all();
+        return $data + $request->body->all() + $request->request->all();
     }
 }
