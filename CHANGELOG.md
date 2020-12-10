@@ -1,3 +1,7 @@
+## [2.0.12] - 2020-12-10
+### Changed
+- Headers from `ApiResponse` follow direct to client.
+
 ## [2.0.11] - 2020-09-16
 ### Changed
 - For `symfony/translation-contracts` added support of the `^2.2`.

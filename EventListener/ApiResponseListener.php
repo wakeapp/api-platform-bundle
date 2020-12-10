@@ -15,8 +15,8 @@ namespace Wakeapp\Bundle\ApiPlatformBundle\EventListener;
 
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
-use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
+use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\OptionsResolver\Exception\ExceptionInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Wakeapp\Bundle\ApiPlatformBundle\Dto\ApiDebugExceptionResultDto;
@@ -26,6 +26,7 @@ use Wakeapp\Bundle\ApiPlatformBundle\Factory\ApiDtoFactory;
 use Wakeapp\Bundle\ApiPlatformBundle\Guesser\ApiErrorCodeGuesserInterface;
 use Wakeapp\Bundle\ApiPlatformBundle\HttpFoundation\ApiRequest;
 use Wakeapp\Bundle\ApiPlatformBundle\HttpFoundation\ApiResponse;
+
 use function explode;
 use function sprintf;
 
@@ -179,6 +180,8 @@ class ApiResponseListener implements LoggerAwareInterface
             'message' => $message,
         ]);
 
-        $event->setResponse(new ApiResponse($resultDto));
+        $headers = $response->headers->all();
+
+        $event->setResponse(new ApiResponse($resultDto, $headers));
     }
 }
