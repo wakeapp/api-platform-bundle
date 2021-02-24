@@ -6,9 +6,9 @@
     "license":     "MIT",
 
     "require": {
-        "php":                                  "~7.1",
+        "php":                                  "~7.1||~8.0",
         "ext-json":                             "*",
-        "wakeapp/swagger-resolver-bundle":      "^0.4.8",
+        "wakeapp/swagger-resolver-bundle":      "^0.4.10",
         "psr/log":                              "^1.0",
         "symfony/config":                       "~3.4||~4.0||~5.0",
         "symfony/dependency-injection":         "~3.4||~4.0||~5.0",
@@ -17,6 +17,13 @@
         "symfony/translation-contracts":        "^1.1||^2.2",
         "wakeapp/dto-resolver":                 "^1.1"
     },
+
+    "repositories" : [
+        {
+            "type": "vcs",
+            "url": "git@github.com:wakeapp/swagger-resolver-bundle.git"
+        }
+    ],
 
     "conflict": {
         "nelmio/api-doc-bundle": "<3.0"
