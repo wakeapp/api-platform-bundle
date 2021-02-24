@@ -1,3 +1,9 @@
+## [Unreleased]
+### Added
+- Support PHP ~8.0.
+### Changed
+- Updated `wakeapp/swagger-resolver-bundle` pattern to the `^0.4.10`.
+
 ## [2.0.12] - 2020-12-10
 ### Changed
 - Headers from `ApiResponse` follow direct to client.
