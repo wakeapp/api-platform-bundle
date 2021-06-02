@@ -1,0 +1,19 @@
+### Composer template
+auth.json
+composer.phar
+composer.lock
+/vendor
+
+### IDE settings
+/.settings
+/.buildpath
+/.project
+/.idea
+/nbproject
+
+### servers system
+*.swp
+*.swo
+*.DS_Store
+/*.ini
+*~

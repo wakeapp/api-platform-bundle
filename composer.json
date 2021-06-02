@@ -1,0 +1,42 @@
+{
+    "name":        "wakeapp/api-platform-bundle",
+    "description": "Extends Symfony HttpFoundation and provides encapsulated area for work with REST API",
+    "type":        "symfony-bundle",
+    "keywords":    ["symfony-bundle", "api-platform", "rest", "api", "http-foundation"],
+    "license":     "MIT",
+
+    "require": {
+        "php":                                  "~7.1||~8.0",
+        "ext-json":                             "*",
+        "wakeapp/swagger-resolver-bundle":      "^0.4.10",
+        "psr/log":                              "^1.0",
+        "symfony/config":                       "~3.4||~4.0||~5.0",
+        "symfony/dependency-injection":         "~3.4||~4.0||~5.0",
+        "symfony/http-foundation":              "~3.4||~4.0||~5.0",
+        "symfony/http-kernel":                  "~3.4||~4.0||~5.0",
+        "symfony/translation-contracts":        "^1.1||^2.2",
+        "wakeapp/dto-resolver":                 "^1.1"
+    },
+
+    "repositories" : [
+        {
+            "type": "vcs",
+            "url": "git@github.com:wakeapp/swagger-resolver-bundle.git"
+        }
+    ],
+
+    "conflict": {
+        "nelmio/api-doc-bundle": "<3.0"
+    },
+
+    "suggest": {
+        "symfony/monolog-bundle":   "Provides possibility for log information into separate channel",
+        "symfony/translation":      "Provides possibility for translate response codes"
+    },
+
+    "autoload": {
+        "psr-4": {
+            "Wakeapp\\Bundle\\ApiPlatformBundle\\": ""
+        }
+    }
+}

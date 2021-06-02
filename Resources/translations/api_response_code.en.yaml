@@ -1,0 +1,11 @@
+0:      Successfully
+
+400:    Received incorrect request data
+401:    Unauthorized
+403:    Access denied
+404:    Route not found
+405:    HTTP method not allowed
+409:    Conflict, data already changed by other request
+410:    Resource no longer available
+412:    Headers contains invalid data or do not contains required
+503:    Server temporarily unavailable, try later
