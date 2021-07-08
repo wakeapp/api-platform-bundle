@@ -55,9 +55,9 @@ class ApiResponseListener implements LoggerAwareInterface
     private $isException = false;
 
     /**
-     * @var TranslatorInterface|null
+     * @var TranslatorInterface
      */
-    private $translator = null;
+    private $translator;
 
     /**
      * @var ApiErrorCodeGuesserInterface
@@ -67,14 +67,14 @@ class ApiResponseListener implements LoggerAwareInterface
     /**
      * @param ApiErrorCodeGuesserInterface $guesser
      * @param ApiDtoFactory $dtoFactory
-     * @param TranslatorInterface|null $translator
+     * @param TranslatorInterface $translator
      * @param string $apiResultDtoClass
      * @param bool $debug
      */
     public function __construct(
         ApiErrorCodeGuesserInterface $guesser,
         ApiDtoFactory $dtoFactory,
-        ?TranslatorInterface $translator = null,
+        TranslatorInterface $translator,
         string $apiResultDtoClass = ApiResultDto::class,
         bool $debug = false
     ) {

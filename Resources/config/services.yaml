@@ -16,7 +16,7 @@ services:
         arguments:
             - '@wakeapp_api_platform.guesser.api_error_code'
             - '@Wakeapp\Bundle\ApiPlatformBundle\Factory\ApiDtoFactory'
-            - '@?Symfony\Component\Translation\TranslatorInterface'
+            - '@translator'
         calls:
             - ['setLogger', ['@Wakeapp\Bundle\ApiPlatformBundle\Logger\ApiPlatformLogger']]
         tags:
