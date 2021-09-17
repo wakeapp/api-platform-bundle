@@ -5,19 +5,19 @@ declare(strict_types=1);
 /*
  * This file is part of the ApiPlatformBundle package.
  *
- * (c) Wakeapp <https://wakeapp.ru>
+ * (c) MarfaTech <https://marfa-tech.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Wakeapp\Bundle\ApiPlatformBundle\Factory;
+namespace MarfaTech\Bundle\ApiPlatformBundle\Factory;
 
 use Linkin\Bundle\SwaggerResolverBundle\Factory\SwaggerResolverFactory;
 use RuntimeException;
-use Wakeapp\Bundle\ApiPlatformBundle\HttpFoundation\ApiRequest;
-use Wakeapp\Component\DtoResolver\Dto\CollectionDtoResolverInterface;
-use Wakeapp\Component\DtoResolver\Dto\DtoResolverInterface;
+use MarfaTech\Bundle\ApiPlatformBundle\HttpFoundation\ApiRequest;
+use MarfaTech\Component\DtoResolver\Dto\CollectionDtoResolverInterface;
+use MarfaTech\Component\DtoResolver\Dto\DtoResolverInterface;
 use function is_subclass_of;
 use function sprintf;
 

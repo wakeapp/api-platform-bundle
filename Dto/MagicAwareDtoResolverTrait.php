@@ -5,16 +5,16 @@ declare(strict_types=1);
 /*
  * This file is part of the ApiPlatformBundle package.
  *
- * (c) Wakeapp <https://wakeapp.ru>
+ * (c) MarfaTech <https://marfa-tech.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Wakeapp\Bundle\ApiPlatformBundle\Dto;
+namespace MarfaTech\Bundle\ApiPlatformBundle\Dto;
 
 use RuntimeException;
-use Wakeapp\Component\DtoResolver\Dto\DtoResolverTrait;
+use MarfaTech\Component\DtoResolver\Dto\DtoResolverTrait;
 use function lcfirst;
 use function sprintf;
 use function strpos;

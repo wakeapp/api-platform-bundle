@@ -5,20 +5,20 @@ declare(strict_types=1);
 /*
  * This file is part of the ApiPlatformBundle package.
  *
- * (c) Wakeapp <https://wakeapp.ru>
+ * (c) MarfaTech <https://marfa-tech.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Wakeapp\Bundle\ApiPlatformBundle\DependencyInjection;
+namespace MarfaTech\Bundle\ApiPlatformBundle\DependencyInjection;
 
 use Closure;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
-use Wakeapp\Bundle\ApiPlatformBundle\Dto\ApiResultDto;
-use Wakeapp\Bundle\ApiPlatformBundle\Dto\ApiResultDtoInterface;
+use MarfaTech\Bundle\ApiPlatformBundle\Dto\ApiResultDto;
+use MarfaTech\Bundle\ApiPlatformBundle\Dto\ApiResultDtoInterface;
 use function is_subclass_of;
 use function sprintf;
 
@@ -29,13 +29,13 @@ class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder(): TreeBuilder
     {
-        $treeBuilder = new TreeBuilder('wakeapp_api_platform');
+        $treeBuilder = new TreeBuilder('marfatech_api_platform');
 
         if (method_exists($treeBuilder, 'getRootNode')) {
             $rootNode = $treeBuilder->getRootNode();
         } else {
             // BC layer for symfony/config 4.1 and older
-            $rootNode = $treeBuilder->root('wakeapp_api_platform');
+            $rootNode = $treeBuilder->root('marfatech_api_platform');
         }
 
         $rootNode

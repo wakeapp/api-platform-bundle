@@ -5,13 +5,13 @@ declare(strict_types=1);
 /*
  * This file is part of the ApiPlatformBundle package.
  *
- * (c) Wakeapp <https://wakeapp.ru>
+ * (c) MarfaTech <https://marfa-tech.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Wakeapp\Bundle\ApiPlatformBundle\EventListener;
+namespace MarfaTech\Bundle\ApiPlatformBundle\EventListener;
 
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
@@ -19,13 +19,13 @@ use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\OptionsResolver\Exception\ExceptionInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use Wakeapp\Bundle\ApiPlatformBundle\Dto\ApiDebugExceptionResultDto;
-use Wakeapp\Bundle\ApiPlatformBundle\Dto\ApiResultDto;
-use Wakeapp\Bundle\ApiPlatformBundle\Exception\ApiException;
-use Wakeapp\Bundle\ApiPlatformBundle\Factory\ApiDtoFactory;
-use Wakeapp\Bundle\ApiPlatformBundle\Guesser\ApiErrorCodeGuesserInterface;
-use Wakeapp\Bundle\ApiPlatformBundle\HttpFoundation\ApiRequest;
-use Wakeapp\Bundle\ApiPlatformBundle\HttpFoundation\ApiResponse;
+use MarfaTech\Bundle\ApiPlatformBundle\Dto\ApiDebugExceptionResultDto;
+use MarfaTech\Bundle\ApiPlatformBundle\Dto\ApiResultDto;
+use MarfaTech\Bundle\ApiPlatformBundle\Exception\ApiException;
+use MarfaTech\Bundle\ApiPlatformBundle\Factory\ApiDtoFactory;
+use MarfaTech\Bundle\ApiPlatformBundle\Guesser\ApiErrorCodeGuesserInterface;
+use MarfaTech\Bundle\ApiPlatformBundle\HttpFoundation\ApiRequest;
+use MarfaTech\Bundle\ApiPlatformBundle\HttpFoundation\ApiResponse;
 
 use function explode;
 use function sprintf;

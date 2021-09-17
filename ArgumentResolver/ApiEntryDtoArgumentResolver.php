@@ -5,13 +5,13 @@ declare(strict_types=1);
 /*
  * This file is part of the ApiPlatformBundle package.
  *
- * (c) Wakeapp <https://wakeapp.ru>
+ * (c) MarfaTech <https://marfa-tech.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Wakeapp\Bundle\ApiPlatformBundle\ArgumentResolver;
+namespace MarfaTech\Bundle\ApiPlatformBundle\ArgumentResolver;
 
 use Exception;
 use Generator;
@@ -19,10 +19,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Controller\ArgumentValueResolverInterface;
 use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata;
 use Symfony\Component\OptionsResolver\Exception\InvalidOptionsException;
-use Wakeapp\Bundle\ApiPlatformBundle\Exception\ApiException;
-use Wakeapp\Bundle\ApiPlatformBundle\Factory\ApiDtoFactory;
-use Wakeapp\Bundle\ApiPlatformBundle\HttpFoundation\ApiRequest;
-use Wakeapp\Component\DtoResolver\Dto\DtoResolverInterface;
+use MarfaTech\Bundle\ApiPlatformBundle\Exception\ApiException;
+use MarfaTech\Bundle\ApiPlatformBundle\Factory\ApiDtoFactory;
+use MarfaTech\Bundle\ApiPlatformBundle\HttpFoundation\ApiRequest;
+use MarfaTech\Component\DtoResolver\Dto\DtoResolverInterface;
 use function is_subclass_of;
 
 class ApiEntryDtoArgumentResolver implements ArgumentValueResolverInterface

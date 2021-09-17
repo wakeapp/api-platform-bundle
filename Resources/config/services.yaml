@@ -1,43 +1,43 @@
 services:
-    Wakeapp\Bundle\ApiPlatformBundle\ArgumentResolver\ApiCollectionEntryDtoArgumentResolver:
+    MarfaTech\Bundle\ApiPlatformBundle\ArgumentResolver\ApiCollectionEntryDtoArgumentResolver:
         arguments:
-            - '@Wakeapp\Bundle\ApiPlatformBundle\Factory\ApiDtoFactory'
+            - '@MarfaTech\Bundle\ApiPlatformBundle\Factory\ApiDtoFactory'
         tags:
             - { name: controller.argument_value_resolver, priority: 250 }
 
-    Wakeapp\Bundle\ApiPlatformBundle\ArgumentResolver\ApiEntryDtoArgumentResolver:
+    MarfaTech\Bundle\ApiPlatformBundle\ArgumentResolver\ApiEntryDtoArgumentResolver:
         arguments:
-            - '@Wakeapp\Bundle\ApiPlatformBundle\Factory\ApiDtoFactory'
+            - '@MarfaTech\Bundle\ApiPlatformBundle\Factory\ApiDtoFactory'
         tags:
             - { name: controller.argument_value_resolver, priority: 250 }
 
-    Wakeapp\Bundle\ApiPlatformBundle\EventListener\ApiResponseListener:
-        class:      Wakeapp\Bundle\ApiPlatformBundle\EventListener\ApiResponseListener
+    MarfaTech\Bundle\ApiPlatformBundle\EventListener\ApiResponseListener:
+        class:      MarfaTech\Bundle\ApiPlatformBundle\EventListener\ApiResponseListener
         arguments:
-            - '@wakeapp_api_platform.guesser.api_error_code'
-            - '@Wakeapp\Bundle\ApiPlatformBundle\Factory\ApiDtoFactory'
+            - '@marfatech_api_platform.guesser.api_error_code'
+            - '@MarfaTech\Bundle\ApiPlatformBundle\Factory\ApiDtoFactory'
             - '@?Symfony\Component\Translation\TranslatorInterface'
         calls:
-            - ['setLogger', ['@Wakeapp\Bundle\ApiPlatformBundle\Logger\ApiPlatformLogger']]
+            - ['setLogger', ['@MarfaTech\Bundle\ApiPlatformBundle\Logger\ApiPlatformLogger']]
         tags:
             - { name: kernel.event_listener, event: kernel.exception, priority: 1 }
             - { name: kernel.event_listener, event: kernel.response }
 
-    Wakeapp\Bundle\ApiPlatformBundle\EventListener\MinimalApiVersionRequestListener:
+    MarfaTech\Bundle\ApiPlatformBundle\EventListener\MinimalApiVersionRequestListener:
         arguments:
-            - '%wakeapp_api_platform.minimal_api_version%'
+            - '%marfatech_api_platform.minimal_api_version%'
         tags:
             - { name: kernel.event_listener, event: kernel.request, priority: 128 }
 
-    Wakeapp\Bundle\ApiPlatformBundle\Factory\ApiDtoFactory:
-        class:      Wakeapp\Bundle\ApiPlatformBundle\Factory\ApiDtoFactory
+    MarfaTech\Bundle\ApiPlatformBundle\Factory\ApiDtoFactory:
+        class:      MarfaTech\Bundle\ApiPlatformBundle\Factory\ApiDtoFactory
         arguments:
             - '@Linkin\Bundle\SwaggerResolverBundle\Factory\SwaggerResolverFactory'
-    wakeapp_api_platform.factory.api_dto:
-        alias:      Wakeapp\Bundle\ApiPlatformBundle\Factory\ApiDtoFactory
+    marfatech_api_platform.factory.api_dto:
+        alias:      MarfaTech\Bundle\ApiPlatformBundle\Factory\ApiDtoFactory
 
-    Wakeapp\Bundle\ApiPlatformBundle\Logger\ApiPlatformLogger:
+    MarfaTech\Bundle\ApiPlatformBundle\Logger\ApiPlatformLogger:
         arguments:
             - '@?logger'
         tags:
-            - { name: 'monolog.logger', channel: 'wakeapp_api_platform' }
+            - { name: 'monolog.logger', channel: 'marfatech_api_platform' }

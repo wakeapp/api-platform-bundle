@@ -1,8 +1,8 @@
 Api Platform Bundle
 ===================
 
-[![Latest Stable Version](https://poser.pugx.org/wakeapp/api-platform-bundle/v/stable)](https://packagist.org/packages/wakeapp/api-platform-bundle)
-[![Total Downloads](https://poser.pugx.org/wakeapp/api-platform-bundle/downloads)](https://packagist.org/packages/wakeapp/api-platform-bundle)
+[![Latest Stable Version](https://poser.pugx.org/marfatech/api-platform-bundle/v/stable)](https://packagist.org/packages/marfatech/api-platform-bundle)
+[![Total Downloads](https://poser.pugx.org/marfatech/api-platform-bundle/downloads)](https://packagist.org/packages/marfatech/api-platform-bundle)
 
 Введение
 --------
@@ -30,7 +30,7 @@ Api Platform Bundle
 Откройте консоль и, перейдя в директорию проекта, выполните следующую команду для загрузки наиболее подходящей
 стабильной версии этого бандла:
 ```bash
-    composer require wakeapp/api-platform-bundle
+    composer require marfatech/api-platform-bundle
 ```
 *Эта команда подразумевает что [Composer](https://getcomposer.org) установлен и доступен глобально.*
 
@@ -52,7 +52,7 @@ class AppKernel extends Kernel
             // ...
 
             new Linkin\Bundle\SwaggerResolverBundle\LinkinSwaggerResolverBundle(),
-            new Wakeapp\Bundle\ApiPlatformBundle\WakeappApiPlatformBundle(),
+            new MarfaTech\Bundle\ApiPlatformBundle\MarfatechApiPlatformBundle(),
         ];
 
         return $bundles;
@@ -76,7 +76,7 @@ declare(strict_types=1);
 namespace App\Guesser\ApiAreaGuesser;
 
 use Symfony\Component\HttpFoundation\Request;
-use Wakeapp\Bundle\ApiPlatformBundle\Guesser\ApiAreaGuesserInterface;
+use MarfaTech\Bundle\ApiPlatformBundle\Guesser\ApiAreaGuesserInterface;
 
 class ApiAreaGuesser implements ApiAreaGuesserInterface
 {
@@ -111,7 +111,7 @@ class ApiAreaGuesser implements ApiAreaGuesserInterface
 
 ```yaml
 # app/config.yml
-wakeapp_api_platform:
+marfatech_api_platform:
     api_area_guesser_service:   App\Guesser\ApiAreaGuesser
 ```
 
@@ -119,15 +119,15 @@ wakeapp_api_platform:
 
 ```yaml
 # app/config.yml
-wakeapp_api_platform:
+marfatech_api_platform:
     # полное имя класса DTO для стандартизации ответа
-    api_result_dto_class:       Wakeapp\Bundle\ApiPlatformBundle\Dto\ApiResultDto
+    api_result_dto_class:       MarfaTech\Bundle\ApiPlatformBundle\Dto\ApiResultDto
 
     # идентификатор сервиса для определения зоны API
     api_area_guesser_service:   App\Guesser\ApiAreaGuesser
 
     # идентификатор сервиса для глобального отлавливания ошибок и выдачи специализированных сообщений вместо 500
-    error_code_guesser_service: Wakeapp\Bundle\ApiPlatformBundle\Guesser\ApiErrorCodeGuesser
+    error_code_guesser_service: MarfaTech\Bundle\ApiPlatformBundle\Guesser\ApiErrorCodeGuesser
 
     # Минимально допустимая версия API.
     minimal_api_version:        1
@@ -150,8 +150,8 @@ wakeapp_api_platform:
 namespace App\Dto;
 
 use Swagger\Annotations as SWG;
-use Wakeapp\Component\DtoResolver\Dto\DtoResolverTrait;
-use Wakeapp\Component\DtoResolver\Dto\DtoResolverInterface;
+use MarfaTech\Component\DtoResolver\Dto\DtoResolverTrait;
+use MarfaTech\Component\DtoResolver\Dto\DtoResolverInterface;
 
 /**
  * @SWG\Definition(
@@ -224,8 +224,8 @@ use App\Dto\ProfileResultDto;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Swagger\Annotations as SWG;
 use Symfony\Component\Routing\Annotation\Route;
-use Wakeapp\Bundle\ApiPlatformBundle\Factory\ApiDtoFactory;
-use Wakeapp\Bundle\ApiPlatformBundle\HttpFoundation\ApiResponse;
+use MarfaTech\Bundle\ApiPlatformBundle\Factory\ApiDtoFactory;
+use MarfaTech\Bundle\ApiPlatformBundle\HttpFoundation\ApiResponse;
 
 /**
  * @Route("/api/profile")
@@ -275,8 +275,8 @@ class ProfileController
 namespace App\Dto;
 
 use Swagger\Annotations as SWG;
-use Wakeapp\Bundle\ApiPlatformBundle\Dto\MagicAwareDtoResolverTrait;
-use Wakeapp\Component\DtoResolver\Dto\DtoResolverInterface;
+use MarfaTech\Bundle\ApiPlatformBundle\Dto\MagicAwareDtoResolverTrait;
+use MarfaTech\Component\DtoResolver\Dto\DtoResolverInterface;
 
 /**
  * @SWG\Definition(
@@ -339,7 +339,7 @@ use App\Dto\UpdateProfileEntryDto;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Swagger\Annotations as SWG;
 use Symfony\Component\Routing\Annotation\Route;
-use Wakeapp\Bundle\ApiPlatformBundle\HttpFoundation\ApiResponse;
+use MarfaTech\Bundle\ApiPlatformBundle\HttpFoundation\ApiResponse;
 
 /**
  * @Route("/api/profile")
@@ -367,7 +367,7 @@ class ProfileController
 
 ### Как описать в формат обертки ответа в аннотациях
 
-Чтобы описать формат обертки ответа `Wakeapp\Bundle\ApiPlatformBundle\Dto\ApiResultDto` при помощи аннотаций
+Чтобы описать формат обертки ответа `MarfaTech\Bundle\ApiPlatformBundle\Dto\ApiResultDto` при помощи аннотаций
 можно использовать следующий подход:
 
 **Шаг 1** Создайте собственный ответ сервера:
@@ -378,8 +378,8 @@ class ProfileController
 namespace App\Dto;
 
 use Swagger\Annotations as SWG;
-use Wakeapp\Bundle\ApiPlatformBundle\Dto\ApiResultDto as BaseApiResultDto;
-use Wakeapp\Component\DtoResolver\Dto\DtoResolverInterface;
+use MarfaTech\Bundle\ApiPlatformBundle\Dto\ApiResultDto as BaseApiResultDto;
+use MarfaTech\Component\DtoResolver\Dto\DtoResolverInterface;
 
 /**
  * @SWG\Definition(
@@ -418,7 +418,7 @@ class ApiResultDto extends BaseApiResultDto
 
 ```yaml
 # app/config.yml
-wakeapp_api_platform:
+marfatech_api_platform:
     api_result_dto_class:       App\Dto\MyApiResultDto
 ```
 
@@ -429,9 +429,9 @@ wakeapp_api_platform:
 
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Swagger\Annotations as SWG;
-use Wakeapp\Bundle\ApiPlatformBundle\HttpFoundation\ApiRequest;
-use Wakeapp\Bundle\ApiPlatformBundle\HttpFoundation\ApiResponse;
-use Wakeapp\Bundle\ApiPlatformBundle\Factory\ApiDtoFactory;
+use MarfaTech\Bundle\ApiPlatformBundle\HttpFoundation\ApiRequest;
+use MarfaTech\Bundle\ApiPlatformBundle\HttpFoundation\ApiResponse;
+use MarfaTech\Bundle\ApiPlatformBundle\Factory\ApiDtoFactory;
 
 class ProfileController
 {

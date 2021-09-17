@@ -5,19 +5,19 @@ declare(strict_types=1);
 /*
  * This file is part of the ApiPlatformBundle package.
  *
- * (c) Wakeapp <https://wakeapp.ru>
+ * (c) MarfaTech <https://marfa-tech.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-namespace Wakeapp\Bundle\ApiPlatformBundle\HttpFoundation;
+namespace MarfaTech\Bundle\ApiPlatformBundle\HttpFoundation;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\HttpKernel;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
-use Wakeapp\Bundle\ApiPlatformBundle\Guesser\ApiAreaGuesserInterface;
+use MarfaTech\Bundle\ApiPlatformBundle\Guesser\ApiAreaGuesserInterface;
 
 class ApiKernel extends HttpKernel
 {
